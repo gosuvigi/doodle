@@ -1,114 +1,82 @@
 package org.springframework.samples.resources;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.annotation.PostConstruct;
-
-import com.github.jknack.handlebars.springmvc.HandlebarsViewResolver;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.samples.resources.handlebars.ProfileHelper;
-import org.springframework.samples.resources.handlebars.ResourceUrlHelper;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.AppCacheManifestTransformer;
 import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
-import org.springframework.web.servlet.resource.ResourceUrlProvider;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
-import org.springframework.web.servlet.view.groovy.GroovyMarkupViewResolver;
+
+import java.io.File;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@Autowired
-	private GroovyMarkupViewResolver groovyMarkupViewResolver;
+    @Value("${resources.projectroot:}")
+    private String projectRoot;
 
-	@Autowired
-	private ResourceUrlProvider urlProvider;
+    @Value("${app.version:}")
+    private String appVersion;
 
-	@Value("${resources.projectroot:}")
-	private String projectRoot;
+    private String getProjectRootRequired() {
+        Assert.state(this.projectRoot != null, "Please set \"resources.projectRoot\" in application.yml");
+        return this.projectRoot;
+    }
 
-	@Value("${app.version:}")
-	private String appVersion;
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/groovy").setViewName("hello");
+        registry.addViewController("/app").setViewName("app");
+        registry.addViewController("/less").setViewName("less");
+        registry.addViewController("/jsp").setViewName("hellojsp");
+    }
 
+    @Bean
+    public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
+        return new ResourceUrlEncodingFilter();
+    }
 
-	private String getProjectRootRequired() {
-		Assert.state(this.projectRoot != null, "Please set \"resources.projectRoot\" in application.yml");
-		return this.projectRoot;
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("index");
-		registry.addViewController("/groovy").setViewName("hello");
-		registry.addViewController("/app").setViewName("app");
-		registry.addViewController("/less").setViewName("less");
-		registry.addViewController("/jsp").setViewName("hellojsp");
-	}
+        boolean devMode = this.env.acceptsProfiles("development");
+        String location;
+        if (devMode) {
+            String currentPath = new File(".").getAbsolutePath();
+            location = "file:///" + currentPath + "/client/src/";
+        } else {
+            location = "classpath:static/";
+        }
 
-	@Bean
-	public HandlebarsViewResolver handlebarsViewResolver() {
-		HandlebarsViewResolver resolver = new HandlebarsViewResolver();
-		resolver.setPrefix("classpath:/handlebars/");
-		resolver.registerHelper("src", new ResourceUrlHelper(this.urlProvider));
-		resolver.registerHelper(ProfileHelper.NAME, new ProfileHelper(this.env.getActiveProfiles()));
-		resolver.setCache(!this.env.acceptsProfiles("development"));
-		resolver.setFailOnMissingFile(false);
-		resolver.setAttributesMap(Collections.singletonMap("applicationVersion", getApplicationVersion()));
-		return resolver;
-	}
+        Integer cachePeriod = devMode ? 0 : null;
+        boolean useResourceCache = !devMode;
+        String version = getApplicationVersion();
 
-	@PostConstruct
-	public void registerGroovyTemplateHelpers() {
-		Map<String, Function> groovyTemplateHelpers = new HashMap<>();
-		groovyTemplateHelpers.put("linkTo", s -> this.urlProvider.getForLookupPath((String) s));
-		groovyTemplateHelpers.put("appVersion", s -> getApplicationVersion());
-		this.groovyMarkupViewResolver.setAttributesMap(groovyTemplateHelpers);
-	}
+        AppCacheManifestTransformer appCacheTransformer = new AppCacheManifestTransformer();
+        VersionResourceResolver versionResolver = new VersionResourceResolver()
+                .addFixedVersionStrategy(version, "/**/*.js", "/**/*.map")
+                .addContentVersionStrategy("/**");
 
-	@Bean
-	public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
-		return new ResourceUrlEncodingFilter();
-	}
+        registry.addResourceHandler("/**")
+                .addResourceLocations(location)
+                .setCachePeriod(cachePeriod)
+                .resourceChain(useResourceCache)
+                .addResolver(versionResolver)
+                .addTransformer(appCacheTransformer);
+    }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-		boolean devMode = this.env.acceptsProfiles("development");
-
-		String location = devMode ? "file:///" + getProjectRootRequired() + "/client/src/" : "classpath:static/";
-		Integer cachePeriod = devMode ? 0 : null;
-		boolean useResourceCache = !devMode;
-		String version = getApplicationVersion();
-
-		AppCacheManifestTransformer appCacheTransformer = new AppCacheManifestTransformer();
-		VersionResourceResolver versionResolver = new VersionResourceResolver()
-				.addFixedVersionStrategy(version, "/**/*.js", "/**/*.map")
-				.addContentVersionStrategy("/**");
-
-		registry.addResourceHandler("/**")
-				.addResourceLocations(location)
-				.setCachePeriod(cachePeriod)
-				.resourceChain(useResourceCache)
-					.addResolver(versionResolver)
-					.addTransformer(appCacheTransformer);
-	}
-
-	protected String getApplicationVersion() {
-		return this.env.acceptsProfiles("development") ? "dev" : this.appVersion;
-	}
+    protected String getApplicationVersion() {
+        return this.env.acceptsProfiles("development") ? "dev" : this.appVersion;
+    }
 
 }
