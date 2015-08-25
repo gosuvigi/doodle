@@ -18,18 +18,24 @@
     "object-assign": "^1.0.0",
     "react": "^0.13.3"
   },
-  "scripts": {
-    "start": "watchify -o src/js/bundle.js -v -d src/js/app.js",
-    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.min.js"
-  },
-  "engines": {
-    "node": ">=0.12.0"
-  },
   "devDependencies": {
     "browserify": "^6.3.4",
     "envify": "^3.4.0",
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.24",
     "watchify": "^2.6.2"
+  },
+  "scripts": {
+    "start": "watchify -o src/js/bundle.js -v -d src/js/app.js",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
+  "engines": {
+    "node": ">=0.12.0"
   }
 }
