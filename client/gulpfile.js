@@ -1,4 +1,3 @@
-
 var path = require('path'),
     cssMinify = require('gulp-minify-css'),
     less = require('gulp-less'),
@@ -7,49 +6,56 @@ var path = require('path'),
 
 var paths = {
     baseUrl: 'file:' + process.cwd() + '/src/',
-    bowerLibs: ['src/lib/**', '!src/lib/*/test/*'],
+    //bowerLibs: ['src/lib/**', '!src/lib/*/test/*'],
     css: {
         files: ['src/css/*.css']
     },
-    less: ['src/less/*'],
+    less: ['src/less/*.less'],
     assets: ["src/cache.manifest"],
     images: ["src/img/*"],
-    destination: './dist'
+    destination: './dist',
+    bundlejs: ['src/js/bundle.min.js']
 };
 
+// Copy the concatenated Javascript file to the "dist" folder
+gulp.task('copy-bundle-js-files', function () {
+    return gulp.src(paths.bundlejs)
+        .pipe(gulp.dest(paths.destination + '/js'));
+});
+
 // Optimize application CSS files and copy to "dist" folder
-gulp.task('optimize-and-copy-css', function() {
+gulp.task('optimize-and-copy-css', function () {
     return gulp.src(paths.css.files)
         .pipe(cssMinify())
         .pipe(gulp.dest(paths.destination + '/css'));
 });
 
 // Optimize application JavaScript files and copy to "dist" folder
-gulp.task('optimize-and-copy-js', function(cb) {
-    var builder = new Builder();
-    builder.loadConfig('./src/config.js')
-        .then(function() {
-            builder.config({ baseURL: paths.baseUrl });
-            builder.build('app/app', paths.destination + '/app/app.js', { minify: true, sourceMaps: true });
-            cb();
-        })
-        .catch(function(err) {
-            cb(err);
-        });
-});
+//gulp.task('optimize-and-copy-js', function(cb) {
+//    var builder = new Builder();
+//    builder.loadConfig('./src/config.js')
+//        .then(function() {
+//            builder.config({ baseURL: paths.baseUrl });
+//            builder.build('app/app', paths.destination + '/app/app.js', { minify: true, sourceMaps: true });
+//            cb();
+//        })
+//        .catch(function(err) {
+//            cb(err);
+//        });
+//});
 
 // Copy jspm-managed JavaScript dependencies to "dist" folder
-gulp.task('copy-lib', function() {
-    return gulp.src(paths.bowerLibs)
-        .pipe(gulp.dest(paths.destination + '/lib'));
-});
+//gulp.task('copy-lib', function() {
+//    return gulp.src(paths.bowerLibs)
+//        .pipe(gulp.dest(paths.destination + '/lib'));
+//});
 
-gulp.task('copy-images', function() {
+gulp.task('copy-images', function () {
     return gulp.src(paths.images)
         .pipe(gulp.dest(paths.destination + '/img'));
 });
 
-gulp.task('copy-assets', function() {
+gulp.task('copy-assets', function () {
     return gulp.src(paths.assets)
         .pipe(gulp.dest(paths.destination))
 });
@@ -61,5 +67,5 @@ gulp.task('less', function () {
         .pipe(gulp.dest(paths.destination + '/css'));
 });
 
-gulp.task('build', ['optimize-and-copy-css', 'optimize-and-copy-js', 'copy-lib',
-    'copy-images', 'less', 'copy-assets'], function(){});
+gulp.task('build', ['copy-bundle-js-files', 'optimize-and-copy-css', 'copy-images', 'less', 'copy-assets'], function () {
+});
