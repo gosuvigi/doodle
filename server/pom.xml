@@ -3,28 +3,28 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.springframework.samples</groupId>
-	<artifactId>spring-resource-handling-server</artifactId>
+	<groupId>org.vigi</groupId>
+	<artifactId>football-doodle-server</artifactId>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Spring Resource Handling Server Module</name>
+	<name>Football Doodle Server Module</name>
 
 	<parent>
-		<groupId>org.springframework.samples</groupId>
-		<artifactId>spring-resource-handling</artifactId>
+		<groupId>org.vigi</groupId>
+		<artifactId>football-doodle</artifactId>
 		<version>0.1.0.BUILD-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
 	<properties>
-		<start-class>org.springframework.samples.resources.Application</start-class>
+		<start-class>org.vigi.Application</start-class>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.samples</groupId>
-			<artifactId>spring-resource-handling-client</artifactId>
+			<groupId>org.vigi</groupId>
+			<artifactId>football-doodle-client</artifactId>
 			<version>0.1.0.BUILD-SNAPSHOT</version>
 		</dependency>
 		<dependency>

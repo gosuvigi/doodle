@@ -1,4 +1,4 @@
-package org.springframework.samples.resources;
+package org.vigi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

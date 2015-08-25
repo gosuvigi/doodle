@@ -1,12 +1,10 @@
-package org.springframework.samples.resources;
+package org.vigi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -27,12 +25,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Value("${app.version:}")
     private String appVersion;
-
-    @Override
-    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
-        super.configureContentNegotiation(configurer);
-        configurer.mediaType("js.map", MediaType.APPLICATION_JSON);
-    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

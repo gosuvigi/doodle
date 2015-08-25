@@ -1,4 +1,4 @@
-package org.springframework.samples.resources;
+package org.vigi;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

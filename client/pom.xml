@@ -3,16 +3,16 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.springframework.samples</groupId>
-	<artifactId>spring-resource-handling-client</artifactId>
+	<groupId>org.vigi</groupId>
+	<artifactId>football-doodle-client</artifactId>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Spring Resource Handling Client module</name>
+	<name>Football Doodle Client module</name>
 
 	<parent>
-		<groupId>org.springframework.samples</groupId>
-		<artifactId>spring-resource-handling</artifactId>
+		<groupId>org.vigi</groupId>
+		<artifactId>football-doodle</artifactId>
 		<version>0.1.0.BUILD-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
@@ -22,7 +22,7 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>0.0.24</version>
+				<version>0.0.25</version>
 				<executions>
 					<execution>
 						<id>install node and npm</id>
@@ -36,13 +36,13 @@
 						<id>npm install</id>
 						<goals><goal>npm</goal></goals>
 					</execution>
-					<execution>
-						<id>jspm-install</id>
-						<goals><goal>npm</goal></goals>
-						<configuration>
-							<arguments>run jspm-install</arguments>
-						</configuration>
-					</execution>
+					<!--<execution>-->
+						<!--<id>jspm-install</id>-->
+						<!--<goals><goal>npm</goal></goals>-->
+						<!--<configuration>-->
+							<!--<arguments>run jspm-install</arguments>-->
+						<!--</configuration>-->
+					<!--</execution>-->
 					<execution>
 						<id>npm build</id>
 						<goals><goal>npm</goal></goals>
