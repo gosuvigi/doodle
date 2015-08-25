@@ -3,7 +3,6 @@
  */
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-//var ReactQuill = require('react-quill');
 var ReactWidgets = require('react-widgets');
 
 var DropdownList = ReactWidgets.DropdownList;
@@ -48,7 +47,6 @@ var DoodleForm = React.createClass({
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="emailText">Email Text</label>
-
                     </div>
                 </div>
                 <div className="row">
@@ -58,8 +56,7 @@ var DoodleForm = React.createClass({
                     </div>
                 </div>
                 <div className="row">
-                    <ButtonInput type="submit"
-                                 className="btn btn-primary col-md-offset-5 col-md-2">Submit</ButtonInput>
+                    <ButtonInput type="submit" className="btn btn-primary col-md-offset-5 col-md-2">Submit</ButtonInput>
                 </div>
             </form>
         );

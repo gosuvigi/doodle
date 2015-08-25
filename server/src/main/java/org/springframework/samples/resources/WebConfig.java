@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.util.Assert;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -27,9 +28,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Value("${app.version:}")
     private String appVersion;
 
-    private String getProjectRootRequired() {
-        Assert.state(this.projectRoot != null, "Please set \"resources.projectRoot\" in application.yml");
-        return this.projectRoot;
+    @Override
+    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
+        super.configureContentNegotiation(configurer);
+        configurer.mediaType("js.map", MediaType.APPLICATION_JSON);
     }
 
     @Override

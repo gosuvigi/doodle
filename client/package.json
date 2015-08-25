@@ -26,10 +26,11 @@
     "envify": "^3.4.0",
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.24",
-    "watchify": "^2.6.2"
+    "watchify": "^3.3.1",
+    "exorcist": "^0.4.0"
   },
   "scripts": {
-    "start": "watchify -o src/js/bundle.js -v -d src/js/app.js",
+    "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=1000",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.min.js"
   },
   "browserify": {
