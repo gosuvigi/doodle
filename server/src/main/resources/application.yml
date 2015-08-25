@@ -1,4 +1,9 @@
 resources:
   projectroot: ./
 
+spring:
+  mvc:
+    favicon:
+      enabled: false
+
 

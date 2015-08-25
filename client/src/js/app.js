@@ -8,10 +8,8 @@
  */
 
 var React = require('react');
-
-var TodoApp = require('./components/TodoApp.react');
-
+var DoodleForm = require('./components/DoodleApp.react');
 React.render(
-  <TodoApp/>,
-  document.getElementById('todoapp')
+    <DoodleForm/>,
+    document.getElementById('doodleMainForm')
 );
