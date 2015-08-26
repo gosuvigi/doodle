@@ -9,10 +9,6 @@
     "events": "^1.0.2",
     "flux": "^2.1.1",
     "fluxxor": "^1.7.1",
-    "gulp": "^3.8.11",
-    "gulp-less": "^3.0.3",
-    "gulp-minify-css": "^1.1.1",
-    "gulp-util": "^3.0.4",
     "keymirror": "~0.1.1",
     "object-assign": "^1.0.0",
     "react": "^0.13.3",
@@ -22,6 +18,10 @@
     "systemjs-builder": "^0.10.6"
   },
   "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-util": "^3.0.4",
     "browserify": "^6.3.4",
     "envify": "^3.4.0",
     "reactify": "^0.15.2",
@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=1000",
-    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.min.js"
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.js"
   },
   "browserify": {
     "transform": [

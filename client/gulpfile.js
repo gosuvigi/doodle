@@ -6,7 +6,6 @@ var path = require('path'),
 
 var paths = {
     baseUrl: 'file:' + process.cwd() + '/src/',
-    //bowerLibs: ['src/lib/**', '!src/lib/*/test/*'],
     css: {
         files: ['src/css/*.css']
     },
@@ -14,7 +13,7 @@ var paths = {
     assets: ["src/cache.manifest"],
     images: ["src/img/*"],
     destination: './dist',
-    bundlejs: ['src/js/bundle.min.js']
+    bundlejs: ['src/js/bundle.js']
 };
 
 // Copy the concatenated Javascript file to the "dist" folder
@@ -29,26 +28,6 @@ gulp.task('optimize-and-copy-css', function () {
         .pipe(cssMinify())
         .pipe(gulp.dest(paths.destination + '/css'));
 });
-
-// Optimize application JavaScript files and copy to "dist" folder
-//gulp.task('optimize-and-copy-js', function(cb) {
-//    var builder = new Builder();
-//    builder.loadConfig('./src/config.js')
-//        .then(function() {
-//            builder.config({ baseURL: paths.baseUrl });
-//            builder.build('app/app', paths.destination + '/app/app.js', { minify: true, sourceMaps: true });
-//            cb();
-//        })
-//        .catch(function(err) {
-//            cb(err);
-//        });
-//});
-
-// Copy jspm-managed JavaScript dependencies to "dist" folder
-//gulp.task('copy-lib', function() {
-//    return gulp.src(paths.bowerLibs)
-//        .pipe(gulp.dest(paths.destination + '/lib'));
-//});
 
 gulp.task('copy-images', function () {
     return gulp.src(paths.images)
