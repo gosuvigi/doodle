@@ -10,5 +10,4 @@ spring:
       enabled: false
   thymeleaf:
     cache: false
-
-
+    prefix: classpath:html/
