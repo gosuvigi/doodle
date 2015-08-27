@@ -10,34 +10,62 @@
     "flux": "^2.1.1",
     "fluxxor": "^1.7.1",
     "keymirror": "~0.1.1",
+    "lodash.assign": "^3.2.0",
     "object-assign": "^1.0.0",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.5",
-    "react-quill": "^0.2.2",
     "react-widgets": "^2.8.0",
     "systemjs-builder": "^0.10.6"
   },
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-less": "^3.0.3",
-    "gulp-minify-css": "^1.1.1",
-    "gulp-util": "^3.0.4",
+    "browser-sync": "^2.8.2",
     "browserify": "^6.3.4",
+    "browserify-shim": "^3.8.2",
     "envify": "^3.4.0",
+    "exorcist": "^0.4.0",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-changed": "^1.1.1",
+    "gulp-filesize": "0.0.6",
+    "gulp-iconfont": "^1.0.0",
+    "gulp-imagemin": "^2.2.1",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "~0.5.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "~1.3.3",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-swig": "^0.7.4",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.4",
+    "lodash": "^3.3.1",
+    "merge-stream": "^0.1.7",
+    "pretty-hrtime": "~1.0.0",
     "reactify": "^0.15.2",
+    "require-dir": "^0.1.0",
     "uglify-js": "~2.4.24",
-    "watchify": "^3.3.1",
-    "exorcist": "^0.4.0"
+    "vinyl-source-stream": "~1.0.0",
+    "vinyl-transform": "~1.0.0",
+    "watchify": "^3.3.1"
   },
   "scripts": {
-    "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=1000",
+    "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=150",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.js"
   },
   "browserify": {
     "transform": [
+      "browserify-shim",
       "reactify",
       "envify"
     ]
+  },
+  "browserify-shim": {
+    "plugin": {
+      "exports": "plugin",
+      "depends": [
+        "jquery:$"
+      ]
+    }
   },
   "engines": {
     "node": ">=0.12.0"

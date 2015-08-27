@@ -9,6 +9,7 @@
 
 var React = require('react');
 var DoodleForm = require('./components/DoodleApp.react');
+alert('gigi23');
 React.render(
     <DoodleForm/>,
     document.getElementById('doodleMainForm')
