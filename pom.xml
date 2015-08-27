@@ -24,6 +24,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<doodle.build.timestamp>${maven.build.timestamp}</doodle.build.timestamp>
 	</properties>
 
 	<repositories>

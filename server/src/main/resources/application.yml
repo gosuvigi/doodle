@@ -1,9 +1,6 @@
 app:
   version: @project.version@
 
-resources:
-  projectroot: ./
-
 spring:
   mvc:
     favicon:

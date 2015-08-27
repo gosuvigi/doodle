@@ -10,7 +10,9 @@ var paths = {
         files: ['src/css/*.css']
     },
     less: ['src/less/*.less'],
-    assets: ["src/cache.manifest"],
+    assets: ['src/cache.manifest'],
+    fonts: ['src/fonts/*'],
+    html: ['src/html/*'],
     images: ["src/img/*"],
     destination: './dist',
     bundlejs: ['src/js/bundle.js']
@@ -39,12 +41,24 @@ gulp.task('copy-assets', function () {
         .pipe(gulp.dest(paths.destination))
 });
 
+gulp.task('copy-html', function () {
+    return gulp.src(paths.html)
+        .pipe(gulp.dest(paths.destination + '/html'))
+});
+
+gulp.task('copy-fonts', function () {
+    return gulp.src(paths.fonts)
+        .pipe(gulp.dest(paths.destination + '/fonts'))
+});
+
 gulp.task('less', function () {
     return gulp.src(paths.less)
         .pipe(less())
-        .pipe(cssMinify({noRebase: true}))
+        //.pipe(cssMinify({noRebase: true}))
         .pipe(gulp.dest(paths.destination + '/css'));
 });
 
-gulp.task('build', ['copy-bundle-js-files', 'optimize-and-copy-css', 'copy-images', 'less', 'copy-assets'], function () {
-});
+gulp.task('build', ['copy-bundle-js-files', 'less', 'optimize-and-copy-css', 'copy-images', 'copy-assets', 'copy-html', 'copy-fonts'],
+    function () {
+    }
+);

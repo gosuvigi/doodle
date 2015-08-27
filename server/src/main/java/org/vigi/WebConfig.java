@@ -19,11 +19,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    @Value("${resources.projectroot:}")
-    private String projectRoot;
-
-    @Value("${app.version:}")
-    private String appVersion;
+    @Value("${last.build.date:now}")
+    private String lastBuildDate;
 
     @Bean
     public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
@@ -65,7 +62,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     protected String getApplicationVersion() {
-        return this.env.acceptsProfiles("development") ? "dev" : this.appVersion;
+        return this.env.acceptsProfiles("development") ? "dev" : this.lastBuildDate;
     }
 
 }

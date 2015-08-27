@@ -1,0 +1,17 @@
+app:
+  version: @project.version@
+
+last:
+  build:
+    date: @doodle.build.timestamp@
+
+server:
+  servlet-path: /doodle
+
+spring:
+  mvc:
+    favicon:
+      enabled: false
+  thymeleaf:
+    cache: false
+    prefix: classpath:static/html/
