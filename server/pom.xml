@@ -19,7 +19,8 @@
 
 	<properties>
 		<start-class>org.vigi.Application</start-class>
-	</properties>
+        <lombok.version>1.16.4</lombok.version>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -52,6 +53,12 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

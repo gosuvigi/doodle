@@ -1,7 +1,9 @@
 /**
  * Created by ratoico on 8/21/15.
  */
-var keyMirror = require('keymirror');
-module.exports = keyMirror({
-    LOAD_DOODLE_TEMPLATES: null
-});
+
+module.exports = {
+    LOAD_DOODLE_TEMPLATES: "LOAD_DOODLE_TEMPLATES",
+    LOAD_DOODLE_TEMPLATES_SUCCESS: "LOAD_DOODLE_TEMPLATES_SUCCESS",
+    LOAD_DOODLE_TEMPLATES_FAIL: "LOAD_DOODLE_TEMPLATES_FAIL"
+};

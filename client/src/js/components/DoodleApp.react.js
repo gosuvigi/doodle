@@ -9,6 +9,7 @@ var DropdownList = ReactWidgets.DropdownList;
 var Input = ReactBootstrap.Input;
 var ButtonInput = ReactBootstrap.ButtonInput;
 var DateTimePicker = ReactWidgets.DateTimePicker;
+var Multiselect = ReactWidgets.Multiselect;
 
 var DoodleForm = React.createClass({
 
@@ -18,18 +19,20 @@ var DoodleForm = React.createClass({
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="templates">Template</label>
-                        <DropdownList id='templates' valueField='id' textField='name'/>
+                        <DropdownList id='templates' valueField='id' textField='name' data={this.props.templates}
+                                      onChange={value => console.log(value.toSource())}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Title hodor" placeholder="Title"/>
+                        <Input type="text" label="Title" ref="title" placeholder="Title"
+                               defaultValue={this.props.selectedTemplate.title} className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="location">Location</label>
-                        <input type="text" className="form-control" id="location" placeholder="Location"/>
+                        <Input type="text" label="Location" ref="location" placeholder="Location"
+                               defaultValue={this.props.selectedTemplate.location} className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
@@ -40,8 +43,8 @@ var DoodleForm = React.createClass({
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="initiator">Initiator</label>
-                        <input type="text" className="form-control" id="initiator" placeholder="Initiator"/>
+                        <Input type="text" label="Initiator" ref="initiator" placeholder="Initiator"
+                               defaultValue={this.props.selectedTemplate.initiator} className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
@@ -52,7 +55,9 @@ var DoodleForm = React.createClass({
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="recipients">Recipients</label>
-                        <input type="text" className="form-control" id="recipients" placeholder="Recipients"/>
+                        <Multiselect id="recipients" valueField='id'
+                                     textField={item => item.firstName + ' ' + item.email}
+                                     data={this.props.selectedTemplate.recipients}/>
                     </div>
                 </div>
                 <div className="row">

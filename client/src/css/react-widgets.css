@@ -685,7 +685,7 @@ ul.rw-list.rw-list-grouped > li.rw-list-option,
   white-space: nowrap;
   border-radius: 3px;
   border: 1px solid #cccccc;
-  background-color: #cccccc;
+  background-color: #e1ebff;
   cursor: pointer;
 }
 .rw-multiselect-taglist > li.rw-state-focus {
