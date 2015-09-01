@@ -12,7 +12,6 @@ var Fluxxor = require('fluxxor');
 var DoodleForm = require('./components/DoodleApp.react');
 var DoodleActions = require('./actions/DoodleActions');
 var DoodleStore = require('./stores/DoodleStore');
-//var data = [{"id":1,"name":"indoor","title":"football indoor","location":"the wall","dateTime":1440751306255,"initiator":"hodor 1","emailText":"text 1","recipients":[{"id": 666, "firstName":"gogu","lastName":null,"email":"gogu@gogu.com","active":false},{"id": 667, "firstName":"hodor","lastName":null,"email":"hodor@hodor.com","active":false}]},{"id":2,"name":"outdoor","title":"football outdoor","location":"vub","dateTime":1440751306256,"initiator":"hodor 2","emailText":"please come before 20:50","recipients":[{"id": 666, "firstName":"gogu","lastName":null,"email":"gogu@gogu.com","active":false},{"firstName":"hodor","lastName":null,"email":"hodor@hodor.com","active":false}]}];
 
 var stores = {
     DoodleStore: new DoodleStore()
@@ -29,12 +28,7 @@ var Application = React.createClass({
 
     getInitialState: function() {
         return {
-            selectedTemplate: {
-                title: "",
-                location: "",
-                initiator: "",
-                recipients: []
-            }
+            selectedTemplate: {}
         };
     },
     getStateFromFlux: function() {
@@ -45,10 +39,13 @@ var Application = React.createClass({
             templates: store.templates
         };
     },
+    updateDoodleTemplateSelection: function(selected) {
+        this.setState({selectedTemplate: selected});
+    },
     render: function() {
         return (
             <div>
-                <DoodleForm selectedTemplate={this.state.selectedTemplate} templates={this.state.templates}/>
+                <DoodleForm selectedTemplate={this.state.selectedTemplate} templates={this.state.templates} changeHandler={this.updateDoodleTemplateSelection}/>
             </div>
         );
     },

@@ -13,38 +13,59 @@ var Multiselect = ReactWidgets.Multiselect;
 
 var DoodleForm = React.createClass({
 
+    selectDoodleTemplate: function (newValue) {
+        this.setState({selectedTemplate: newValue});
+        this.props.changeHandler(newValue);
+    },
+    getNextDayOfWeek: function (dayOfWeek) {
+        var resultDate = new Date();
+        resultDate.setHours(21, 0, 0, 0);
+
+        resultDate.setDate(resultDate.getDate() + (7 + dayOfWeek - resultDate.getDay()) % 7);
+
+        return resultDate;
+    },
+
     render: function () {
         return (
             <form>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="templates">Template</label>
-                        <DropdownList id='templates' valueField='id' textField='name' data={this.props.templates}
-                                      onChange={value => console.log(value.toSource())}/>
+                        <DropdownList id='templates' ref="templates" valueField='id' textField='name'
+                                      data={this.props.templates}
+                                      onChange={value => this.selectDoodleTemplate(value)}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Title" ref="title" placeholder="Title"
-                               defaultValue={this.props.selectedTemplate.title} className="form-control"/>
+                        <Input type="text" label="Title" ref="title" id="title" placeholder="Title"
+                               value={this.props.selectedTemplate.title}
+                               defaultValue={''}
+                               onChange={value => this.setState({ value: this.refs.title.getValue() })}
+                               className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Location" ref="location" placeholder="Location"
-                               defaultValue={this.props.selectedTemplate.location} className="form-control"/>
+                        <Input type="text" label="Location" ref="location" id="location" placeholder="Location"
+                               value={this.props.selectedTemplate.location}
+                               onChange={value => this.setState({ value: this.refs.location.getValue() })}
+                               className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="dateTime">Date / Time</label>
-                        <DateTimePicker id="dateTime"/>
+                        <DateTimePicker ref="dateTime" id="dateTime" defaultValue={this.getNextDayOfWeek(1)}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Initiator" ref="initiator" placeholder="Initiator"
-                               defaultValue={this.props.selectedTemplate.initiator} className="form-control"/>
+                        <Input type="text" label="Initiator" ref="initiator" id="initiator" placeholder="Initiator"
+                               value={this.props.selectedTemplate.initiator}
+                               onChange={value => this.setState({ value: this.refs.initiator.getValue() })}
+                               className="form-control"/>
                     </div>
                 </div>
                 <div className="row">
@@ -55,9 +76,10 @@ var DoodleForm = React.createClass({
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="recipients">Recipients</label>
-                        <Multiselect id="recipients" valueField='id'
+                        <Multiselect ref="recipients" id="recipients" valueField='id'
                                      textField={item => item.firstName + ' ' + item.email}
-                                     data={this.props.selectedTemplate.recipients}/>
+                                     data={this.props.selectedTemplate.recipients}
+                                     value={this.props.selectedTemplate.recipients}/>
                     </div>
                 </div>
                 <div className="row">
