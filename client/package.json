@@ -4,6 +4,22 @@
   "description": "Create doodles for planning footbal matches",
   "author": "vigi",
   "main": "src/js/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gosuvigi/doodle.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack"
+  ],
+  "license": "MIT",
   "dependencies": {
     "classnames": "^2.1.3",
     "events": "^1.0.2",
@@ -48,7 +64,8 @@
     "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=150",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.js",
     "build-webpack": "webpack --progress --profile --colors",
-    "watch": "webpack-dev-server --hot --inline --progress --colors"
+    "watch": "webpack-dev-server --hot --inline --progress --colors",
+    "hot-reload": "node server.js"
   },
   "browserify": {
     "transform": [

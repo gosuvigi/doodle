@@ -11,9 +11,11 @@ var webpack = require('webpack'),
 module.exports = {
     target: 'web',
     cache: true,
-    entry: {
-        bundle: path.join(srcPath, 'js/app.js')
-    },
+    entry: [
+        'webpack-dev-server/client?http://0.0.0.0:3000',
+        'webpack/hot/only-dev-server',
+        './src/js/app'
+    ],
     resolve: {
         root: srcPath,
         extensions: ['', '.js'],
@@ -28,16 +30,31 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.js?$/, exclude: /node_modules/, loader: 'babel?cacheDirectory'}
+            {test: /\.js?$/, exclude: /node_modules/, loaders: ['react-hot', 'babel?cacheDirectory']}
         ]
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
         new HtmlWebpackPlugin({
             inject: true,
             template: 'src/js/index.html'
         }),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        // removes a lot of debugging code in React
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        // keeps hashes consistent between compilations
+        new webpack.optimize.OccurenceOrderPlugin(),
+        // minifies your code
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false
+            }
+        })
     ],
 
     debug: true,
