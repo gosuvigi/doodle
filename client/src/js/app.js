@@ -12,6 +12,8 @@ var Fluxxor = require('fluxxor');
 var DoodleForm = require('./components/DoodleApp.react');
 var DoodleActions = require('./actions/DoodleActions');
 var DoodleStore = require('./stores/DoodleStore');
+var BootstrapCss = require('../css/bootstrap.css');
+var ReactWidgetsCss = require('../css/react-widgets.css');
 
 var stores = {
     DoodleStore: new DoodleStore()
