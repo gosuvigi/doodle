@@ -14,7 +14,6 @@ var Multiselect = ReactWidgets.Multiselect;
 var DoodleForm = React.createClass({
 
     selectDoodleTemplate: function (newValue) {
-        this.setState({selectedTemplate: newValue});
         this.props.changeHandler(newValue);
     },
     getNextDayOfWeek: function (dayOfWeek) {
@@ -24,6 +23,10 @@ var DoodleForm = React.createClass({
         resultDate.setDate(resultDate.getDate() + (7 + dayOfWeek - resultDate.getDay()) % 7);
 
         return resultDate;
+    },
+    handleChange: function(event) {
+        console.log('event: ' + event.target.value);
+        this.setState({value: event.target.value});
     },
 
     render: function () {
@@ -41,8 +44,7 @@ var DoodleForm = React.createClass({
                     <div className="form-group col-md-offset-2 col-md-8">
                         <Input type="text" label="Title" ref="title" id="title" placeholder="Title"
                                value={this.props.selectedTemplate.title}
-                               defaultValue={''}
-                               onChange={value => this.setState({ value: this.refs.title.getValue() })}
+                               onChange={this.handleChange}
                                className="form-control"/>
                     </div>
                 </div>
@@ -79,7 +81,8 @@ var DoodleForm = React.createClass({
                         <Multiselect ref="recipients" id="recipients" valueField='id'
                                      textField={item => item.firstName + ' ' + item.email}
                                      data={this.props.selectedTemplate.recipients}
-                                     value={this.props.selectedTemplate.recipients}/>
+                                     //value={this.props.selectedTemplate.recipients}
+                                     onChange={value => this.setState({value: value})}/>
                     </div>
                 </div>
                 <div className="row">

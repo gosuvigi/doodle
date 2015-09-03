@@ -6,7 +6,7 @@ var $ = require('jquery');
 var DoodleTemplatesClient = {
     load: function (success, failure) {
         var result = $.ajax({
-            url: "/doodle/templates",
+            url: "http://localhost:8080/doodle/templates",
             dataType: 'json',
             cache: false
         }).done(function (data) {

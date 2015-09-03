@@ -26,12 +26,12 @@ var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 var Application = React.createClass({
     mixins: [FluxMixin, StoreWatchMixin("DoodleStore")],
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             selectedTemplate: {}
         };
     },
-    getStateFromFlux: function() {
+    getStateFromFlux: function () {
         var store = this.getFlux().store("DoodleStore");
         return {
             loading: store.loading,
@@ -39,17 +39,18 @@ var Application = React.createClass({
             templates: store.templates
         };
     },
-    updateDoodleTemplateSelection: function(selected) {
+    updateDoodleTemplateSelection: function (selected) {
         this.setState({selectedTemplate: selected});
     },
-    render: function() {
+    render: function () {
         return (
             <div>
-                <DoodleForm selectedTemplate={this.state.selectedTemplate} templates={this.state.templates} changeHandler={this.updateDoodleTemplateSelection}/>
+                <DoodleForm selectedTemplate={this.state.selectedTemplate} templates={this.state.templates}
+                            changeHandler={this.updateDoodleTemplateSelection}/>
             </div>
         );
     },
-    componentDidMount: function() {
+    componentDidMount: function () {
         this.getFlux().actions.loadDoodleTemplates();
     }
 });
