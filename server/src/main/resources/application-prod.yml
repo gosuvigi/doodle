@@ -14,4 +14,4 @@ spring:
       enabled: false
   thymeleaf:
     cache: false
-    prefix: classpath:static/html/
+    prefix: classpath:static/
