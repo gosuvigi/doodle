@@ -3,10 +3,12 @@
  */
 var $ = require('jquery');
 
+var templatesUrl = (process.env.NODE_ENV === 'production' ? 'templates' : 'http://158.166.39.148:8080/doodle/templates');
+
 var DoodleTemplatesClient = {
     load: function (success, failure) {
         var result = $.ajax({
-            url: "http://localhost:8080/doodle/templates",
+            url: templatesUrl,
             dataType: 'json',
             cache: false
         }).done(function (data) {

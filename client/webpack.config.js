@@ -15,7 +15,7 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://158.166.39.148:3000',
         'webpack/hot/only-dev-server',
-        './src/js/app'
+        path.resolve(srcPath, 'js/app.js')
     ],
     resolve: {
         root: srcPath,
@@ -23,7 +23,7 @@ module.exports = {
         modulesDirectories: ['node_modules', 'src']
     },
     output: {
-        path: path.join(__dirname, 'tmp'),
+        path: path.resolve(__dirname, 'build'),
         publicPath: '',
         filename: 'bundle.js',
         pathInfo: true,
@@ -31,12 +31,24 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader')},
+            {test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader'), include: srcPath + "/css"},
             //{test: /\.less$/, loaders: ['style-loader', 'css-loader', 'less-loader']},
-            {test: /\.gif$/, loaders: ['url-loader?mimetype=image/png', 'file-loader?name=[path][name].[ext]']},
-            {test: /\.ico$/, loaders: ['file-loader?name=[path][name].[ext]']},
-            {test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loaders: ['url-loader?mimetype=application/font-woff', 'file-loader?name=[path][name].[ext]']},
-            {test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/, loaders: ['file-loader?name=[path][name].[ext]']},
+            {
+                test: /\.gif$/,
+                loaders: ['url-loader?mimetype=image/png', 'file-loader?name=[path][name].[ext]'],
+                include: srcPath + "/img"
+            },
+            {test: /\.ico$/, loaders: ['file-loader?name=[path][name].[ext]'], include: srcPath + "/img"},
+            {
+                test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
+                loaders: ['url-loader?mimetype=application/font-woff', 'file-loader?name=[path][name].[ext]'],
+                include: srcPath + "/fonts"
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/,
+                loaders: ['file-loader?name=[path][name].[ext]'],
+                include: srcPath + "/fonts"
+            },
             {
                 test: /\.js?$/,
                 include: srcPath + "/js",
@@ -48,11 +60,15 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: 'src/html/index.html'
+        }),
         new webpack.NoErrorsPlugin(),
         // removes a lot of debugging code in React
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+                'NODE_ENV': JSON.stringify('dev')
             }
         }),
         // keeps hashes consistent between compilations
@@ -65,16 +81,16 @@ module.exports = {
         }),
         new ExtractTextPlugin('style.css', {allChunks: true}),
         // definePlugin takes raw strings and inserts them, so you can put strings of JS if you want.
-        new webpack.DefinePlugin({
-            __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
-            __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
-        })
+        //new webpack.DefinePlugin({
+        //    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+        //    __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
+        //})
     ],
 
     debug: true,
     devtool: 'eval-cheap-module-source-map',
     devServer: {
-        contentBase: './tmp',
+        contentBase: './build',
         historyApiFallback: true
     }
 };

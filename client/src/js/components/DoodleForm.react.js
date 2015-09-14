@@ -34,7 +34,7 @@ var DoodleForm = React.createClass({
             <form>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="templates">Template3</label>
+                        <label for="templates">Template</label>
                         <DropdownList id='templates' ref="templates" valueField='id' textField='name'
                                       data={this.props.templates}
                                       onChange={value => this.selectDoodleTemplate(value)}/>

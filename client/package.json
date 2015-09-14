@@ -66,7 +66,7 @@
     "start": "cd src/js && watchify app.js -o 'exorcist bundle.js.map > bundle.js' --verbose --debug  --poll=150",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > src/js/bundle.js",
     "build-webpack": "webpack --progress --profile --colors",
-    "watch": "webpack-dev-server --hot --inline --progress --colors",
+    "watch": "webpack-dev-server --devtool eval --content-base build --hot --inline --progress --colors",
     "hot-reload": "node server.js",
     "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js"
   },

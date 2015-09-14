@@ -9,7 +9,7 @@
 
 var React = require('react');
 var Fluxxor = require('fluxxor');
-var DoodleForm = require('./components/DoodleApp.react');
+var DoodleForm = require('./components/DoodleForm.react');
 var DoodleActions = require('./actions/DoodleActions');
 var DoodleStore = require('./stores/DoodleStore');
 var BootstrapCss = require('../css/bootstrap.css');
