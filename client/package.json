@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Create doodles for planning footbal matches",
   "author": "vigi",
-  "main": "src/js/app.js",
+  "main": "src/js/app.jsx",
   "repository": {
     "type": "git",
     "url": "https://github.com/gosuvigi/doodle.git"
@@ -27,6 +27,8 @@
     "immutable": "^3.7.5",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.5",
+    "react-redux": "^2.1.2",
+    "react-router": "^0.13.3",
     "react-widgets": "^2.8.0",
     "redux": "^3.0.0"
   },
@@ -55,7 +57,8 @@
     "build-webpack": "webpack --progress --profile --colors",
     "watch": "webpack-dev-server --devtool eval --content-base build --hot --inline --progress --colors",
     "hot-reload": "node server.js",
-    "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js"
+    "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'"
   },
   "engines": {
     "node": ">=0.12.0"
