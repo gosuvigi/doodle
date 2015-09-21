@@ -15,11 +15,11 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://158.166.39.148:3000',
         'webpack/hot/only-dev-server',
-        path.resolve(srcPath, 'js/app.js')
+        path.resolve(srcPath, 'js/app.jsx')
     ],
     resolve: {
         root: srcPath,
-        extensions: ['', '.js'],
+        extensions: ['', '.js', '.jsx'],
         modulesDirectories: ['node_modules', 'src']
     },
     output: {
@@ -50,10 +50,10 @@ module.exports = {
                 include: srcPath + "/fonts"
             },
             {
-                test: /\.js?$/,
+                test: /\.jsx?$/,
                 include: srcPath + "/js",
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel?cacheDirectory']
+                loader: 'react-hot!babel'
             }
         ]
     },
@@ -69,14 +69,6 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('dev')
-            }
-        }),
-        // keeps hashes consistent between compilations
-        new webpack.optimize.OccurenceOrderPlugin(),
-        // minifies your code
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                warnings: false
             }
         }),
         new ExtractTextPlugin('style.css', {allChunks: true}),

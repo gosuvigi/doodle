@@ -12,19 +12,9 @@
  * TodoActions
  */
 var DoodleConstants = require('../constants/DoodleConstants');
-var DoodleTemplatesClient = require('./DoodleTemplatesClient');
 
 var DoodleActions = {
 
-    loadDoodleTemplates: function() {
-        this.dispatch(DoodleConstants.LOAD_DOODLE_TEMPLATES);
-
-        DoodleTemplatesClient.load(function(templates) {
-            this.dispatch(DoodleConstants.LOAD_DOODLE_TEMPLATES_SUCCESS, {templates: templates});
-        }.bind(this), function(error) {
-            this.dispatch(DoodleConstants.LOAD_DOODLE_TEMPLATES_FAIL, {error: error});
-        }.bind(this));
-    }
 
 };
 
