@@ -1,9 +1,10 @@
 /**
- * Created by ratoico on 8/24/15.
+ * Created by vigi on 8/24/15.
  */
 import React from 'react/addons'
 import {connect} from 'react-redux'
 import {Input, ButtonInput} from 'react-bootstrap'
+import ExampleInput from './ExampleInput'
 import {DropdownList, DateTimePicker, Multiselect} from 'react-widgets'
 import * as actionCreators from '../action_creators'
 
@@ -26,20 +27,20 @@ export const DoodleForm = React.createClass({
                     <div className="form-group col-md-offset-2 col-md-8">
                         <label for="templates">Template</label>
                         <DropdownList id='templates' ref="templates" valueField='id' textField='name'
-                                      data={this.props.templates}
+                                      data={this.props.templates.toArray()} placeholder="Select a template"
                                       onChange={selected => this.props.selectDoodleTemplate(selected)}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Title" ref="title" id="title" placeholder="Title"
-                               className="form-control" defaultValue={this.props.selectedTemplate.title}/>
+                        <ExampleInput type="text" label="Title" ref="title" id="title" placeholder="Title"
+                               className="form-control" text={this.props.selectedTemplate.title}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <Input type="text" label="Location" ref="location" id="location" placeholder="Location"
-                               className="form-control" defaultValue={this.props.selectedTemplate.location}/>
+                        <ExampleInput type="text" label="Location" ref="location" id="location" placeholder="Location"
+                               className="form-control" text={this.props.selectedTemplate.location}/>
                     </div>
                 </div>
                 <div className="row">
@@ -76,8 +77,8 @@ export const DoodleForm = React.createClass({
 
 function mapStateToProps(state) {
     return {
-        templates: state.get('templates') || [],
-        selectedTemplate: state.get('selectedTemplate') || {title: 'hodor'}
+        templates: state.get('templates'),
+        selectedTemplate: state.get('selectedTemplate')
     };
 }
 

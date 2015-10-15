@@ -1,5 +1,5 @@
 /**
- * Created by ratoico on 9/2/15.
+ * Created by vigi on 9/2/15.
  */
 'use strict';
 
@@ -80,7 +80,8 @@ module.exports = {
     ],
 
     debug: true,
-    devtool: 'eval-cheap-module-source-map',
+    //devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
     devServer: {
         contentBase: './build',
         historyApiFallback: true
