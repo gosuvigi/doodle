@@ -1,5 +1,8 @@
 {
-"optional": ["runtime"],
-"stage": 0,
-"comments": false
+  "presets": ["es2015", "react"],
+  "env": {
+    "development": {
+      "presets": ["react-hmre"]
+    }
+  }
 }
