@@ -20,8 +20,8 @@ import App from './containers/App'
 //store.dispatch(getAllProducts())
 
 render(
-    <Provider store={store}>
+    //<Provider store={store}>
         <App />
-    </Provider>,
-    document.getElementById('root')
+    //</Provider>,
+    , document.getElementById('doodleMainForm')
 )
