@@ -4,14 +4,13 @@
 import React, { Component, PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
 import DoodleTemplate from './DoodleTemplate.js'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as DoodleActions from '../actions/actions'
+import { selectDoodleTemplate } from '../actions/actions'
 
 export default class DoodlePlanner extends Component {
 
     render() {
-        const { templates, selectedTemplate } = this.props
+        const { templates, selectedTemplate, onSelectTemplate } = this.props
 
         return (
             <form className="form-horizontal">
@@ -23,7 +22,7 @@ export default class DoodlePlanner extends Component {
                             id="templates"
                             data={templates}
                             textField='title'
-                            onChange={value => this.setState({ value })}/>
+                            onChange={value => onSelectTemplate(value)}/>
                     </div>
                 </div>
                 <DoodleTemplate template={selectedTemplate}/>
@@ -37,6 +36,7 @@ export default class DoodlePlanner extends Component {
         )
     }
 }
+
 
 DoodlePlanner.propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
@@ -52,7 +52,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators(DoodleActions, dispatch)
+        onSelectTemplate: (template) => {
+            dispatch(selectDoodleTemplate(template))
+        }
     }
 }
 
