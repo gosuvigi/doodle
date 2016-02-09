@@ -1,14 +1,13 @@
 /**
  * Created by vigi on 2/3/2016.
  */
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import DoodlePlanner from '../components/DoodlePlanner'
 
 import '../../css/bootstrap.css'
 import '../../css/react-widgets.css'
 
-export default class App extends Component {
-
+class App extends Component {
     render() {
         return (
             <div>
@@ -18,3 +17,5 @@ export default class App extends Component {
         )
     }
 }
+
+export default App

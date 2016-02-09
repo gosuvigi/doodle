@@ -1,8 +1,8 @@
 /**
  * Created by vigi on 2/6/2016.
  */
-import React, {Component, PropTypes} from 'react'
-import {Multiselect} from 'react-widgets'
+import React, { Component, PropTypes } from 'react'
+import { Multiselect } from 'react-widgets'
 
 export default class Explore extends Component {
     constructor(props) {
@@ -19,33 +19,33 @@ export default class Explore extends Component {
         return (
             <div>
                 <div className="form-group">
-                    <label for="location" className="col-sm-2 control-label">Location</label>
+                    <label htmlFor="location" className="col-sm-2 control-label">Location</label>
                     <div className="col-sm-8">
                         <input type="text" defaultValue={location} ref="location" label="Location"
                                id="location" placeholder="Location" className="form-control"/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="dateTime" className="col-sm-2 control-label">Date / Time</label>
+                    <label htmlFor="dateTime" className="col-sm-2 control-label">Date / Time</label>
                     <div className="col-sm-8">
                         <input type="text" defaultValue={dateTime} ref="dateTime" id="dateTime"/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="initiator" className="col-sm-2 control-label">Initiator</label>
+                    <label htmlFor="initiator" className="col-sm-2 control-label">Initiator</label>
                     <div className="col-sm-8">
                         <input type="text" defaultValue={initiator} ref="initiator" id="initiator"
                                placeholder="Initiator" className="form-control"/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="players" className="col-sm-2 control-label">Players</label>
+                    <label htmlFor="players" className="col-sm-2 control-label">Players</label>
                     <div className="col-sm-8">
                         <Multiselect defaultValue={players} data={players} ref="players"/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="emailText" className="col-sm-2 control-label">Email Text</label>
+                    <label htmlFor="emailText" className="col-sm-2 control-label">Email Text</label>
                     <div className="col-sm-8">
                         <input type="text" defaultValue={emailText} ref="emailText" id="emailText"
                                placeholder="Email Text" className="form-control"/>

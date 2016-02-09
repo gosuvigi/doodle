@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {Input, ButtonInput} from 'react-bootstrap'
 import ExampleInput from './ExampleInput'
 import {DropdownList, DateTimePicker, Multiselect} from 'react-widgets'
-import * as actionCreators from '../action_creators'
+import * as actionCreators from '../actions/actions'
 
 export const DoodleForm = React.createClass({
     mixins: [React.addons.PureRenderMixin],
@@ -25,7 +25,7 @@ export const DoodleForm = React.createClass({
             <form>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="templates">Template</label>
+                        <label htmlFor="templates">Template</label>
                         <DropdownList id='templates' ref="templates" valueField='id' textField='name'
                                       data={this.props.templates.toArray()} placeholder="Select a template"
                                       onChange={selected => this.props.selectDoodleTemplate(selected)}/>
@@ -45,7 +45,7 @@ export const DoodleForm = React.createClass({
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="dateTime">Date / Time</label>
+                        <label htmlFor="dateTime">Date / Time</label>
                         <DateTimePicker ref="dateTime" id="dateTime" defaultValue={this.getNextDayOfWeek(1)}/>
                     </div>
                 </div>
@@ -57,12 +57,12 @@ export const DoodleForm = React.createClass({
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="emailText">Email Text</label>
+                        <label htmlFor="emailText">Email Text</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-offset-2 col-md-8">
-                        <label for="recipients">Recipients</label>
+                        <label htmlFor="recipients">Recipients</label>
                         <Multiselect ref="recipients" id="recipients" valueField='id'
                                      textField={item => item.firstName + ' ' + item.email}/>
                     </div>
