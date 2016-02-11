@@ -37,7 +37,6 @@ export default class DoodlePlanner extends Component {
     }
 }
 
-
 DoodlePlanner.propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
     templates: PropTypes.array.isRequired

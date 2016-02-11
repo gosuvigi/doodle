@@ -8,14 +8,14 @@ const initialState = {
     selectedTemplate: {},
     templates: [{
         title: "Monday VUB",
-        location: "VUB",
+        location: "VUB 1",
         dateTime: "Monday",
         initiator: "vigi",
         players: ["messi", "neymar", "suarez"],
         emailText: "gogo"
     }, {
         title: "Friday VUB",
-        location: "VUB",
+        location: "VUB 2",
         dateTime: "Friday",
         initiator: "vigi",
         players: ["messi", "suarez"],
@@ -26,9 +26,7 @@ const initialState = {
 function selectDoodleTemplate(previousState = initialState.selectedTemplate, action = '') {
     switch (action.type) {
         case SELECT_DOODLE_TEMPLATE:
-            return Object.assign({}, previousState, {
-                selectedTemplate: action.selectedTemplate
-            })
+            return action.selectedTemplate
         default:
             return previousState
     }
@@ -37,9 +35,7 @@ function selectDoodleTemplate(previousState = initialState.selectedTemplate, act
 function loadDoodleTemplates(previousState = initialState.templates, action = '') {
     switch (action.type) {
         case LOAD_DOODLE_TEMPLATES:
-            return Object.assign({}, previousState, {
-                templates: action.templates
-            })
+            return action.templates
         default:
             return previousState
     }

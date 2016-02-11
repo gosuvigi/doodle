@@ -50,7 +50,7 @@
   "scripts": {
     "build-webpack": "webpack --progress --profile --colors",
     "watch": "webpack-dev-server --devtool eval --content-base build --hot --inline --progress --colors",
-    "hot-reload": "node server.js",
+    "start": "node server.js",
     "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'"
   },
