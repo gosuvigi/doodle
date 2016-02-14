@@ -12,7 +12,7 @@ const initialState = {
         location: "VUB 1",
         dateTime: "Monday",
         initiator: "vigi",
-        players: ["messi", "neymar", "suarez"],
+        players: [ "messi", "neymar", "suarez"],
         emailText: "gogo"
     }, {
         title: "Friday VUB",

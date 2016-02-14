@@ -3,7 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
-import DoodleTemplate from './DoodleTemplate.js'
+//import DoodleTemplate from './DoodleTemplate.js'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import { selectDoodleTemplate } from '../actions/actions'
@@ -20,7 +20,7 @@ export const fields = [
 class DoodlePlanner extends Component {
 
     render() {
-        const { onSelectTemplate, templates,
+        const { onSelectTemplate, templates, selectedTemplate,
             fields: { location, dateTime, initiator, players, emailText}
             } = this.props
 
@@ -65,8 +65,7 @@ class DoodlePlanner extends Component {
                         <label htmlFor="players" className="col-sm-2 control-label">Players</label>
 
                         <div className="col-sm-8">
-                            <Multiselect {...players} ref="players"
-                                                      onChange={value => this.setState({ value })}/>
+                            <Multiselect {...players} data={selectedTemplate.players} ref="players"/>
                         </div>
                     </div>
                     <div className="form-group">
@@ -97,7 +96,8 @@ DoodlePlanner.propTypes = {
 function mapStateToProps(state) {
     return {
         templates: state.templates,
-        initialValues: state.selectedTemplate
+        initialValues: state.selectedTemplate,
+        selectedTemplate: state.selectedTemplate
     }
 }
 
