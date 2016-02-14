@@ -2,6 +2,7 @@
  * Created by vigi on 2/7/2016.
  */
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import { LOAD_DOODLE_TEMPLATES, SELECT_DOODLE_TEMPLATE } from '../actions/actions'
 
 const initialState = {
@@ -41,9 +42,11 @@ function loadDoodleTemplates(previousState = initialState.templates, action = ''
     }
 }
 
-const doodleReducer = combineReducers({
+
+const doodleReducers = combineReducers({
     selectedTemplate: selectDoodleTemplate,
-    templates: loadDoodleTemplates
+    templates: loadDoodleTemplates,
+    form: formReducer // Mounted at 'form', redux-form
 })
 
-export default doodleReducer
+export default doodleReducers
