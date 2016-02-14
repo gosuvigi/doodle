@@ -7,7 +7,6 @@ import { Multiselect } from 'react-widgets'
 export default class DoodleTemplate extends Component {
 
     render() {
-        console.log('props: ' + JSON.stringify(this.props))
         const { location, dateTime, initiator, players, emailText } = this.props
         return (
             <div>

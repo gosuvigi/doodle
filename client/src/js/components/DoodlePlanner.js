@@ -65,7 +65,8 @@ class DoodlePlanner extends Component {
                         <label htmlFor="players" className="col-sm-2 control-label">Players</label>
 
                         <div className="col-sm-8">
-                            <Multiselect {...players} data={selectedTemplate.players} ref="players"/>
+                            <Multiselect {...players} data={selectedTemplate.players} ref="players"
+                                                      valueField="name" textField="email"/>
                         </div>
                     </div>
                     <div className="form-group">

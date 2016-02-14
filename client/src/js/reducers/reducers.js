@@ -12,14 +12,32 @@ const initialState = {
         location: "VUB 1",
         dateTime: "Monday",
         initiator: "vigi",
-        players: [ "messi", "neymar", "suarez"],
+        players: [
+            {
+                name: "messi",
+                email: "messi@fcb.com"
+            },
+            {
+                name: "neymar",
+                email: "neymar@fcb.com"
+            },
+            {
+                name: "suarez",
+                email: "suarez@fcb.com"
+            }
+        ],
         emailText: "gogo"
     }, {
         title: "Friday VUB",
         location: "VUB 2",
         dateTime: "Friday",
         initiator: "vigi",
-        players: ["messi", "suarez"],
+        players: [
+            {
+                name: "hodor",
+                email: "hodor@fcb.com"
+            }
+        ],
         emailText: "gogo"
     }]
 }
