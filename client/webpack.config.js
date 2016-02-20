@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var srcPath = path.join(__dirname, 'src')
+var WriteFilePlugin = require('write-file-webpack-plugin')
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -9,14 +10,21 @@ module.exports = {
         path.resolve(srcPath, 'js/index')
     ],
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: __dirname + '/static',
         filename: 'bundle.js',
-        publicPath: '/static/'
+        publicPath: '/static',
+        pathInfo: true,
+        sourceMapFilename: 'bundle.map.js'
+    },
+    devServer: {
+        outputPath: __dirname + '/static'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        // this plugin is needed to be able to server the static resource with Spring Boot embedded server as well
+        new WriteFilePlugin()
     ],
     module: {
         loaders: [

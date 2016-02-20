@@ -1,0 +1,11 @@
+app:
+  version: @project.version@
+
+spring:
+  mvc:
+    favicon:
+      enabled: false
+  thymeleaf:
+    cache: false
+    # need to add /client/src/html as a resource in your IDE
+    prefix: classpath:/

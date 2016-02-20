@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.AppCacheManifestTransformer;
 import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
@@ -30,12 +31,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        boolean devMode = env.acceptsProfiles("embedded-server-dev") || env.acceptsProfiles("default");
+        boolean devMode = env.acceptsProfiles("embedded") || env.acceptsProfiles("default");
         Integer cachePeriodSeconds = devMode ? 0 : null;
         boolean useResourceCache = !devMode;
         String version = getApplicationVersion();
 
-        AppCacheManifestTransformer appCacheTransformer = new AppCacheManifestTransformer();
+//        AppCacheManifestTransformer appCacheTransformer = new AppCacheManifestTransformer();
         VersionResourceResolver versionResolver = new VersionResourceResolver()
                 .addFixedVersionStrategy(version, "/**/*.js", "/**/*.map")
                 .addContentVersionStrategy("/**");
@@ -45,14 +46,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations(resourceLocations)
                 .setCachePeriod(cachePeriodSeconds)
                 .resourceChain(useResourceCache)
-                .addResolver(versionResolver)
-                .addTransformer(appCacheTransformer);
+                .addResolver(versionResolver);
+//                .addTransformer(appCacheTransformer);
     }
 
     private String getStaticResourceLocations() {
-        if (env.acceptsProfiles("embedded-server-dev")) {
+        if (env.acceptsProfiles("embedded")) {
             String currentPath = new File(".").getAbsolutePath();
-            return "file:///" + currentPath + "/client/src/html/";
+            return "file:///" + currentPath + "/client/";
         } else if (env.acceptsProfiles("prod")) {
             return "classpath:static/";
         }
