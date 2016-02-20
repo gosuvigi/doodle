@@ -10,7 +10,7 @@ const initialState = {
     templates: [{
         title: "Monday VUB",
         location: "VUB 1",
-        dateTime: "Monday",
+        dateTime: new Date(),
         initiator: "vigi",
         players: [
             {
@@ -30,7 +30,7 @@ const initialState = {
     }, {
         title: "Friday VUB",
         location: "VUB 2",
-        dateTime: "Friday",
+        dateTime: new Date(),
         initiator: "vigi",
         players: [
             {

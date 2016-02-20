@@ -5,9 +5,9 @@ var webpack = require('webpack');
 var path = require('path');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'dist', '');
-var mainPath = path.resolve(__dirname, 'src/js', 'app.js');
+var mainPath = path.resolve(__dirname, 'src/js', 'index');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+//var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
 

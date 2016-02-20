@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.3.14",
+    "moment": "^2.11.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.1.1",
@@ -52,7 +53,7 @@
     "build-webpack": "webpack --progress --profile --colors",
     "watch": "webpack-dev-server --devtool eval --content-base build --hot --inline --progress --colors",
     "start": "node server.js",
-    "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "build-production": "webpack -p --config webpack.production.config.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'"
   },
   "engines": {

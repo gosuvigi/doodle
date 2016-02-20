@@ -52,7 +52,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private String getStaticResourceLocations() {
         if (env.acceptsProfiles("embedded-server-dev")) {
             String currentPath = new File(".").getAbsolutePath();
-            return "file:///" + currentPath + "/client/src/";
+            return "file:///" + currentPath + "/client/src/html/";
         } else if (env.acceptsProfiles("prod")) {
             return "classpath:static/";
         }

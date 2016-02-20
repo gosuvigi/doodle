@@ -9,7 +9,7 @@ module.exports = {
         path.resolve(srcPath, 'js/index')
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },
@@ -24,7 +24,7 @@ module.exports = {
                 test: /\.js$/,
                 loaders: ['babel'],
                 exclude: /node_modules/,
-                include: __dirname
+                include: srcPath
             },
             {
                 test: /\.json$/,
@@ -36,21 +36,25 @@ module.exports = {
                 test: /\.css$/,
                 exclude: /node_modules/,
                 loaders: ['style', 'css'],
+                include: srcPath
             },
             {
                 test: /\.gif$/,
                 exclude: /node_modules/,
-                loader: "url-loader?mimetype=image/png"
+                loader: "url-loader?mimetype=image/png",
+                include: srcPath
             },
             {
                 test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
                 exclude: /node_modules/,
-                loader: "url-loader?mimetype=application/font-woff"
+                loader: "url-loader?mimetype=application/font-woff",
+                include: srcPath
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/,
                 exclude: /node_modules/,
-                loader: "file-loader?name=[name].[ext]"
+                loader: "file-loader?name=[name].[ext]",
+                include: srcPath
             }
         ]
     }
