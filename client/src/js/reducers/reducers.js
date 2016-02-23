@@ -5,7 +5,26 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import { LOAD_DOODLE_TEMPLATES, SELECT_DOODLE_TEMPLATE } from '../actions/actions'
 
-const initialState = {
+export const allPlayers = [
+    {
+        name: "messi",
+        email: "messi@fcb.com"
+    },
+    {
+        name: "neymar",
+        email: "neymar@fcb.com"
+    },
+    {
+        name: "suarez",
+        email: "suarez@fcb.com"
+    },
+    {
+        name: "hodor",
+        email: "hodor@fcb.com"
+    }
+]
+
+export const initialState = {
     selectedTemplate: {},
     templates: [{
         title: "Monday VUB",
@@ -31,14 +50,14 @@ const initialState = {
         title: "Friday VUB",
         location: "VUB 2",
         dateTime: new Date(),
-        initiator: "vigi",
+        initiator: "hodor",
         players: [
             {
                 name: "hodor",
                 email: "hodor@fcb.com"
             }
         ],
-        emailText: "gogo"
+        emailText: "hodor?"
     }]
 }
 
