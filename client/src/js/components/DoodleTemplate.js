@@ -54,7 +54,6 @@ export default class DoodleTemplate extends Component {
                     <label htmlFor="players" className="col-sm-2 control-label">Players</label>
                     <div className="col-sm-8">
                         <Multiselect data={allPlayers} value={players} ref="players" valueField="name" textField="email"
-                                     //onChange={this.handleChange.bind(this, 'players')}
                                      onChange={value => this.handleChangePlayers(value)} />
                     </div>
                 </div>
@@ -72,11 +71,13 @@ export default class DoodleTemplate extends Component {
 }
 
 DoodleTemplate.propTypes = {
-    location: PropTypes.string.isRequired,
-    //dateTime: PropTypes.date.isRequired,
-    initiator: PropTypes.string.isRequired,
-    players: PropTypes.array.isRequired,
-    emailText: PropTypes.string.isRequired,
-    handleChange: PropTypes.func.isRequired
+    template: PropTypes.object.isRequired,
+    location: PropTypes.string,
+    dateTime: PropTypes.object,
+    initiator: PropTypes.string,
+    players: PropTypes.array,
+    emailText: PropTypes.string,
+    handleChange: PropTypes.func.isRequired,
+    handleChangePlayers: PropTypes.func.isRequired
 }
 

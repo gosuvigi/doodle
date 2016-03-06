@@ -1,9 +1,12 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 //import { Provider } from 'react-redux'
 //import { createStore } from 'redux'
 //import doodleReducers from './reducers/reducers'
 import App from './containers/App'
+import DoodlePlannerReact from './containers/DoodlePlannerReact'
+import Players from './containers/Players'
 
 //let store = createStore(doodleReducers)
 //
@@ -14,4 +17,11 @@ import App from './containers/App'
 //    document.getElementById('doodleMainForm')
 //)
 
-render(<App/>, document.getElementById('doodleMainForm'))
+render((
+    <Router history={browserHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute component={DoodlePlannerReact}/>
+            <Route path="/players" component={Players}/>
+        </Route>
+    </Router>
+), document.getElementById('doodleMainForm'))

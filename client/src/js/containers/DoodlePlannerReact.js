@@ -3,7 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
-import DoodleTemplate from './DoodleTemplate'
+import DoodleTemplate from './../components/DoodleTemplate'
 import { initialState, allPlayers as allPlayersList } from '../reducers/reducers'
 
 export default class DoodlePlannerReact extends Component {
@@ -40,7 +40,6 @@ export default class DoodlePlannerReact extends Component {
             <form className="form-horizontal">
                 <div className="form-group">
                     <label htmlFor="templates" className="col-sm-2 control-label">Template</label>
-
                     <div className="col-sm-4">
                         <DropdownList
                             id="templates"
@@ -53,7 +52,6 @@ export default class DoodlePlannerReact extends Component {
                                 allPlayers={this.state.allPlayers}
                                 handleChange={this.handleChange.bind(this)}
                                 handleChangePlayers={this.handleChangePlayers.bind(this)}/>
-
                 <div className="form-group">
                     <div className="col-sm-6 col-sm-offset-2">
                         <button type="submit" disabled={submitting} className="btn btn-primary">
