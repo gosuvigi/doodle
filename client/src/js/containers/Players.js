@@ -1,16 +1,23 @@
 /**
- * Created by vigi on 2/27/2016.
+ * Created by vigi on 3/13/2016.
  */
 import React, { Component, PropTypes } from 'react'
+import PlayersList from '../components/PlayersList'
+import { allPlayers as allPlayersList } from '../reducers/reducers'
 
-class Players extends Component {
+export default class Players extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {players: allPlayersList, links: {}}
+    }
+
     render() {
         return (
             <div>
-                <h2>Players</h2>
+                <PlayersList players={this.state.players} links={this.state.links}/>
             </div>
         )
     }
-}
 
-export default Players
+}

@@ -7,20 +7,44 @@ import { LOAD_DOODLE_TEMPLATES, SELECT_DOODLE_TEMPLATE } from '../actions/action
 
 export const allPlayers = [
     {
+        id: 1,
         name: "messi",
-        email: "messi@fcb.com"
+        email: "messi@fcb.com",
+        "_links" : {
+            "self" : {
+                "href" : "http://localhost:8080/api/players/1"
+            }
+        }
     },
     {
+        id: 2,
         name: "neymar",
-        email: "neymar@fcb.com"
+        email: "neymar@fcb.com",
+        "_links" : {
+            "self" : {
+                "href" : "http://localhost:8080/api/players/2"
+            }
+        }
     },
     {
+        id: 3,
         name: "suarez",
-        email: "suarez@fcb.com"
+        email: "suarez@fcb.com",
+        "_links" : {
+            "self" : {
+                "href" : "http://localhost:8080/api/players/3"
+            }
+        }
     },
     {
+        id: 4,
         name: "hodor",
-        email: "hodor@fcb.com"
+        email: "hodor@fcb.com",
+        "_links" : {
+            "self" : {
+                "href" : "http://localhost:8080/api/players/4"
+            }
+        }
     }
 ]
 
