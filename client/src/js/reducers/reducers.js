@@ -12,7 +12,7 @@ export const allPlayers = [
         email: "messi@fcb.com",
         "_links" : {
             "self" : {
-                "href" : "http://localhost:8080/api/players/1"
+                "href" : "http://localhost:8080/api/players/messi"
             }
         }
     },
@@ -22,7 +22,7 @@ export const allPlayers = [
         email: "neymar@fcb.com",
         "_links" : {
             "self" : {
-                "href" : "http://localhost:8080/api/players/2"
+                "href" : "http://localhost:8080/api/players/neymar"
             }
         }
     },
@@ -32,7 +32,7 @@ export const allPlayers = [
         email: "suarez@fcb.com",
         "_links" : {
             "self" : {
-                "href" : "http://localhost:8080/api/players/3"
+                "href" : "http://localhost:8080/api/players/suarez"
             }
         }
     },
@@ -42,7 +42,7 @@ export const allPlayers = [
         email: "hodor@fcb.com",
         "_links" : {
             "self" : {
-                "href" : "http://localhost:8080/api/players/4"
+                "href" : "http://localhost:8080/api/players/hodor"
             }
         }
     }

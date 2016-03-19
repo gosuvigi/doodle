@@ -2,8 +2,7 @@
  * Created by vigi on 2/27/2016.
  */
 import React, { Component, PropTypes } from 'react'
-import Player from './Player'
-
+import { Link } from 'react-router'
 export default class PlayersList extends Component {
 
     constructor(props) {
@@ -48,8 +47,11 @@ export default class PlayersList extends Component {
     render() {
         const { players, links } = this.props
         var playersList = players.map(player =>
-            <Player key={player._links.self.href} player={player}/>
-        );
+            <tr key={player.name}>
+                <td><Link to={"/players/" + player.name}>{player.name}</Link></td>
+                <td>{player.email}</td>
+            </tr>
+        )
 
         var navLinks = [];
         if ("first" in links) {

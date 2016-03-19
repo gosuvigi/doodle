@@ -5,13 +5,10 @@ import React, { Component, PropTypes } from 'react'
 
 export default class Player extends Component {
     render() {
-        const { name, email } = this.props.player
-
         return (
-            <tr>
-                <td>{name}</td>
-                <td>{email}</td>
-            </tr>
+            <div>
+                <h2>{this.props.params.playerName}</h2>
+            </div>
         )
     }
 }

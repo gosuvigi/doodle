@@ -2,6 +2,7 @@ package org.vigi;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,10 +16,10 @@ import java.util.List;
  * Created by ratoico on 8/24/15 4:36 PM.
  */
 @Controller
-public class DoodleController {
+class DoodleController {
 
     @RequestMapping("/")
-    public String home() {
+    String home() {
         return "index";
     }
 
@@ -54,5 +55,15 @@ public class DoodleController {
     @RequestMapping(value = "/templates", method = RequestMethod.GET, produces = "application/json")
     ResponseEntity getAllTemplates() {
         return ResponseEntity.ok(templates);
+    }
+
+    @RequestMapping("/players")
+    String players() {
+        return "index";
+    }
+
+    @RequestMapping("/players/{player}")
+    String playerDetail(@PathVariable String player) {
+        return "index";
     }
 }
