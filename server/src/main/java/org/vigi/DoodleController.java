@@ -35,8 +35,8 @@ class DoodleController {
                 .location("the wall")
                 .name("indoor")
                 .title("football indoor")
-                .recipient(Person.builder().id(666L).firstName("gogu").email("gogu@gogu.com").build())
-                .recipient(Person.builder().id(667L).firstName("hodor").email("hodor@hodor.com").build())
+                .recipient(Player.builder().id(666L).firstName("gogu").email("gogu@gogu.com").build())
+                .recipient(Player.builder().id(667L).firstName("hodor").email("hodor@hodor.com").build())
                 .build();
         DoodleTemplate dt2 = DoodleTemplate.builder()
                 .id(2L)
@@ -46,14 +46,14 @@ class DoodleController {
                 .location("vub")
                 .name("outdoor")
                 .title("football outdoor")
-                .recipient(Person.builder().firstName("gogu").email("gogu@gogu.com").build())
-                .recipient(Person.builder().firstName("hodor").email("hodor@hodor.com").build())
+                .recipient(Player.builder().firstName("gogu").email("gogu@gogu.com").build())
+                .recipient(Player.builder().firstName("hodor").email("hodor@hodor.com").build())
                 .build();
         templates = Collections.unmodifiableList(Arrays.asList(dt1, dt2));
     }
 
-    @RequestMapping(value = "/templates", method = RequestMethod.GET, produces = "application/json")
-    ResponseEntity getAllTemplates() {
+    @RequestMapping(value = "/api/templates", method = RequestMethod.GET, produces = "application/json")
+    ResponseEntity<List<DoodleTemplate>> getAllTemplates() {
         return ResponseEntity.ok(templates);
     }
 
@@ -65,5 +65,11 @@ class DoodleController {
     @RequestMapping("/players/{player}")
     String playerDetail(@PathVariable String player) {
         return "index";
+    }
+
+    @RequestMapping(value = "/api/players", method = RequestMethod.GET, produces = "application/json")
+    ResponseEntity<List<Player>> getAllPlayers() {
+        Player p = Player.builder().email("hodor").active(true).build();
+        return ResponseEntity.ok(Arrays.asList(p));
     }
 }

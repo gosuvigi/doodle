@@ -17,7 +17,18 @@ module.exports = {
         sourceMapFilename: 'bundle.map.js'
     },
     devServer: {
-        outputPath: __dirname + '/static'
+        outputPath: __dirname + '/static',
+        // proxy: {
+        //     '/api/*': {
+        //         target: 'http://localhost:8080',
+        //         secure: false,
+        //         // node-http-proxy option - don't add /localhost:8080/ to proxied request paths
+        //         prependPath: false
+        //     }
+        // },
+    },
+    historyApiFallback: {
+        index: '/static'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),

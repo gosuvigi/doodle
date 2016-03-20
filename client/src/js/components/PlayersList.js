@@ -1,12 +1,15 @@
 /**
  * Created by vigi on 2/27/2016.
  */
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
+import {restClient} from '../utils/restClient'
+
 export default class PlayersList extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {players: []}
         this.handleNavFirst = this.handleNavFirst.bind(this)
         this.handleNavPrev = this.handleNavPrev.bind(this)
         this.handleNavNext = this.handleNavNext.bind(this)
@@ -14,22 +17,22 @@ export default class PlayersList extends Component {
         this.handleInput = this.handleInput.bind(this)
     }
 
-    handleNavFirst(e){
+    handleNavFirst(e) {
         e.preventDefault()
         this.props.onNavigate(this.props.links.first.href)
     }
 
-    handleNavPrev(e){
+    handleNavPrev(e) {
         e.preventDefault()
         this.props.onNavigate(this.props.links.prev.href)
     }
 
-    handleNavNext(e){
+    handleNavNext(e) {
         e.preventDefault()
         this.props.onNavigate(this.props.links.next.href)
     }
 
-    handleNavLast(e){
+    handleNavLast(e) {
         e.preventDefault()
         this.props.onNavigate(this.props.links.last.href)
     }
@@ -44,8 +47,15 @@ export default class PlayersList extends Component {
         }
     }
 
+    componentDidMount() {
+        restClient({method: 'GET', path: '/api/players'})
+            .done(response => {
+                this.setState({players: response.entity.players});
+            })
+    }
+
     render() {
-        const { players, links } = this.props
+        const {players, links} = this.props
         var playersList = players.map(player =>
             <tr key={player.name}>
                 <td><Link to={"/players/" + player.name}>{player.name}</Link></td>
@@ -72,13 +82,13 @@ export default class PlayersList extends Component {
                 <input ref="pageSize" defaultValue={this.props.pageSize} onInput={this.handleInput}/>
                 <table className="table table-striped table-hover table-condensed">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {playersList}
+                    {playersList}
                     </tbody>
                 </table>
                 <div>

@@ -29,5 +29,5 @@ public final class DoodleTemplate {
     private final String emailText;
 
     @Singular
-    private final List<Person> recipients;
+    private final List<Player> recipients;
 }

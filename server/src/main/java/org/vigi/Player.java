@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Builder
 @Getter
-public final class Person {
+public final class Player {
 
     private Long id;
 
