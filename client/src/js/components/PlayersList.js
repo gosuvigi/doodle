@@ -3,13 +3,11 @@
  */
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
-import {restClient} from '../utils/restClient'
 
 export default class PlayersList extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {players: []}
         this.handleNavFirst = this.handleNavFirst.bind(this)
         this.handleNavPrev = this.handleNavPrev.bind(this)
         this.handleNavNext = this.handleNavNext.bind(this)
@@ -47,18 +45,11 @@ export default class PlayersList extends Component {
         }
     }
 
-    componentDidMount() {
-        restClient({method: 'GET', path: '/api/players'})
-            .done(response => {
-                this.setState({players: response.entity.players});
-            })
-    }
-
     render() {
         const {players, links} = this.props
         var playersList = players.map(player =>
             <tr key={player.name}>
-                <td><Link to={"/players/" + player.name}>{player.name}</Link></td>
+                <td><Link to={player._links.self.href}>{player.name}</Link></td>
                 <td>{player.email}</td>
             </tr>
         )

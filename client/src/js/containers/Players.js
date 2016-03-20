@@ -4,12 +4,19 @@
 import React, { Component, PropTypes } from 'react'
 import PlayersList from '../components/PlayersList'
 import { allPlayers as allPlayersList } from '../reducers/reducers'
+import {restClient} from '../utils/restClient'
 
 export default class Players extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {players: allPlayersList, links: {}}
+    }
+
+    componentDidMount() {
+        restClient({method: 'GET', path: '/api/players'})
+            .done(response => {
+                this.setState({players: response.entity._embedded.playerList, links: {}});
+            })
     }
 
     render() {

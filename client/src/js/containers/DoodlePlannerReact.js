@@ -5,6 +5,7 @@ import React, { Component, PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
 import DoodleTemplate from './../components/DoodleTemplate'
 import { initialState, allPlayers as allPlayersList } from '../reducers/reducers'
+import {restClient} from '../utils/restClient'
 
 export default class DoodlePlannerReact extends Component {
 
@@ -18,6 +19,15 @@ export default class DoodlePlannerReact extends Component {
             templates: initialState.templates,
             allPlayers: allPlayersList
         })
+        // restClient({method: 'GET', path: '/api/templates'})
+        //     .done(response => {
+        //         const loadedTemplates = response.entity._embedded.doodleTemplateList
+        //         this.setState({
+        //             selectedTemplate: {},
+        //             templates: loadedTemplates,
+        //             allPlayers: allPlayersList
+        //         })
+        //     })
     }
 
     handleChange(field, value) {
@@ -34,7 +44,6 @@ export default class DoodlePlannerReact extends Component {
 
     render() {
         const submitting = false
-        const templates = this.templates
 
         return (
             <form className="form-horizontal">

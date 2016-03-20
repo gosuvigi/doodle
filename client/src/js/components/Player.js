@@ -7,7 +7,7 @@ export default class Player extends Component {
     render() {
         return (
             <div>
-                <h2>{this.props.params.playerName}</h2>
+                <h2>{this.props.params.id}</h2>
             </div>
         )
     }

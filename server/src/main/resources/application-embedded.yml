@@ -9,3 +9,6 @@ spring:
     cache: false
     # need to add /client/src/html as a resource in your IDE
     prefix: classpath:/
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false

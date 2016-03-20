@@ -23,7 +23,7 @@ render((
         <Route path="/" component={App}>
             <IndexRoute component={DoodlePlannerReact}/>
             <Route path="/players" component={Players}/>
-            <Route path="/players/:playerName" component={Player}/>
+            <Route path="/players/:id" component={Player}/>
         </Route>
     </Router>
 ), document.getElementById('doodleMainForm'))
