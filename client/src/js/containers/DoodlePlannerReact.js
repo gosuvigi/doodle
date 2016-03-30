@@ -11,23 +11,34 @@ export default class DoodlePlannerReact extends Component {
 
     constructor(props) {
         super(props)
-    }
-
-    componentWillMount() {
-        this.setState({
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.state = {
             selectedTemplate: {},
             templates: initialState.templates,
             allPlayers: allPlayersList
-        })
-        // restClient({method: 'GET', path: '/api/templates'})
-        //     .done(response => {
-        //         const loadedTemplates = response.entity._embedded.doodleTemplateList
-        //         this.setState({
-        //             selectedTemplate: {},
-        //             templates: loadedTemplates,
-        //             allPlayers: allPlayersList
-        //         })
-        //     })
+        }
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        restClient({method: 'POST', path: '/api/templates'})
+            .done(response => {
+                console.log(JSON.stringify(response.entity))
+            }, error => {
+                console.log('error: ' + JSON.stringify(error))
+            })
+    }
+
+    componentDidMount() {
+        restClient({method: 'GET', path: '/api/templates'})
+            .done(response => {
+                const loadedTemplates = response.entity._embedded.doodleTemplateList
+                this.setState({
+                    selectedTemplate: {},
+                    templates: loadedTemplates,
+                    allPlayers: allPlayersList
+                })
+            })
     }
 
     handleChange(field, value) {
@@ -46,7 +57,7 @@ export default class DoodlePlannerReact extends Component {
         const submitting = false
 
         return (
-            <form className="form-horizontal">
+            <form onSubmit={this.handleSubmit} className="form-horizontal">
                 <div className="form-group">
                     <label htmlFor="templates" className="col-sm-2 control-label">Template</label>
                     <div className="col-sm-4">

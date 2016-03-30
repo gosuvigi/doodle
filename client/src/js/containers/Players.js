@@ -1,15 +1,16 @@
 /**
  * Created by vigi on 3/13/2016.
  */
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import PlayersList from '../components/PlayersList'
-import { allPlayers as allPlayersList } from '../reducers/reducers'
+import {allPlayers as allPlayersList} from '../reducers/reducers'
 import {restClient} from '../utils/restClient'
 
 export default class Players extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {players: [], links: []}
     }
 
     componentDidMount() {

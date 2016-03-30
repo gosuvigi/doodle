@@ -37,7 +37,7 @@ export default class DoodleTemplate extends Component {
                 <div className="form-group">
                     <label htmlFor="dateTime" className="col-sm-2 control-label">Date / Time</label>
                     <div className="col-sm-4">
-                        <DateTimePicker format='MMMM Do YYYY, h:mm a' type="text" value={dateTime}
+                        <DateTimePicker format='MMMM Do YYYY, h:mm a' type="text" value={new Date(dateTime)}
                                         ref="dateTime" id="dateTime"
                                         onChange={this.handleChange.bind(this, 'dateTime')}/>
                     </div>

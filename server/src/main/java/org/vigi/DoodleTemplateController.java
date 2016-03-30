@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by vigi on 3/20/2016.
@@ -53,5 +54,10 @@ class DoodleTemplateController {
         Link selfLink = linkTo(methodOn(this.getClass()).templateResource(player.getId()))
                 .withSelfRel();
         return new Resource<>(player, selfLink);
+    }
+
+    @RequestMapping(method = POST)
+    String submitDoodle() {
+        return "{\"hodor\": 123}";
     }
 }

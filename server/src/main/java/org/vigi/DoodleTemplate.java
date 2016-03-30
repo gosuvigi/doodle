@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ public final class DoodleTemplate {
 
     private final String location;
 
-    private final Date dateTime;
+    private final LocalDateTime dateTime;
 
     private final String initiator;
 

@@ -2,6 +2,7 @@ package org.vigi;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ class DoodleTemplateService {
     private List<DoodleTemplate> initTemplates() {
         DoodleTemplate dt1 = DoodleTemplate.builder()
                 .id(1L)
-                .dateTime(new Date())
+                .dateTime(LocalDateTime.now())
                 .emailText("text 1")
                 .initiator("hodor 1")
                 .location("the wall")
@@ -30,7 +31,7 @@ class DoodleTemplateService {
                 .build();
         DoodleTemplate dt2 = DoodleTemplate.builder()
                 .id(2L)
-                .dateTime(new Date())
+                .dateTime(LocalDateTime.now().plusMinutes(15))
                 .emailText("please come before 20:50")
                 .initiator("hodor 2")
                 .location("vub")
