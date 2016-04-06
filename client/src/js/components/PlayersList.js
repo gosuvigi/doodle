@@ -49,23 +49,23 @@ export default class PlayersList extends Component {
         const {players, links} = this.props
         var playersList = players.map(player =>
             <tr key={player.name}>
-                <td><Link to={player._links.self.href}>{player.name}</Link></td>
+                <td><Link to={player._links.view.href}>{player.name}</Link></td>
                 <td>{player.email}</td>
             </tr>
         )
 
         var navLinks = [];
         if ("first" in links) {
-            navLinks.push(<button key="first" onClick={this.handleNavFirst}>&lt;&lt;</button>)
+            navLinks.push(<li key="first"><a onClick={this.handleNavFirst}>&lt;&lt;</a></li>)
         }
         if ("prev" in links) {
-            navLinks.push(<button key="prev" onClick={this.handleNavPrev}>&lt;</button>)
+            navLinks.push(<li key="prev"><a onClick={this.handleNavPrev}>&lt;</a></li>)
         }
         if ("next" in links) {
-            navLinks.push(<button key="next" onClick={this.handleNavNext}>&gt;</button>)
+            navLinks.push(<li key="next"><a onClick={this.handleNavNext}>&gt;</a></li>)
         }
         if ("last" in links) {
-            navLinks.push(<button key="last" onClick={this.handleNavLast}>&gt;&gt;</button>)
+            navLinks.push(<li key="last"><a onClick={this.handleNavLast}>&gt;&gt;</a></li>)
         }
 
         return (
@@ -82,9 +82,11 @@ export default class PlayersList extends Component {
                     {playersList}
                     </tbody>
                 </table>
-                <div>
-                    {navLinks}
-                </div>
+                <nav>
+                    <ul className="pagination">
+                        {navLinks}
+                    </ul>
+                </nav>
             </div>
         )
     }

@@ -1,5 +1,8 @@
 package org.vigi;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -13,53 +16,22 @@ import java.util.Optional;
 @Service
 class PlayerService {
 
-    private final List<Player> players;
+    private final PlayerRepository playerRepository;
 
-    PlayerService() {
-        players = initPlayers();
-    }
-
-    private List<Player> initPlayers() {
-        Player messi = Player.builder()
-                .id(1L)
-                .name("messi")
-                .email("messi@messi.com")
-                .active(true)
-                .subscriber(true)
-                .build();
-        Player neymar = Player.builder()
-                .id(2L)
-                .name("neymar")
-                .email("neymar@neymar.com")
-                .active(true)
-                .subscriber(true)
-                .build();
-        Player suarez = Player.builder()
-                .id(3L)
-                .name("suarez")
-                .email("suarez@suarez.com")
-                .active(true)
-                .subscriber(true)
-                .build();
-        Player hodor = Player.builder()
-                .id(4L)
-                .name("hodor")
-                .email("hodor@hodor.com")
-                .active(true)
-                .subscriber(true)
-                .build();
-        return Collections.unmodifiableList(Arrays.asList(messi, neymar, suarez, hodor));
+    @Autowired
+    PlayerService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
     }
 
     List<Player> getAllPlayers() {
-        return players;
+        return playerRepository.findAll();
+    }
+
+    Page<Player> getPlayersPaged(Pageable pageable) {
+        return playerRepository.findAll(pageable);
     }
 
     Player getPlayer(Long playerId) {
-        Optional<Player> optional = players.stream().filter(p -> p.getId().equals(playerId)).findFirst();
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        throw new IllegalArgumentException(String.format("Player with id: '%s' cannot be found.", playerId));
+        return playerRepository.findOne(playerId);
     }
 }

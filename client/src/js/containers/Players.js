@@ -14,9 +14,9 @@ export default class Players extends Component {
     }
 
     componentDidMount() {
-        restClient({method: 'GET', path: '/api/players'})
+        restClient({method: 'GET', path: '/api/players', params: {size: 1}})
             .done(response => {
-                this.setState({players: response.entity._embedded.playerList, links: {}});
+                this.setState({players: response.entity._embedded.playerList, links: response.entity._links});
             })
     }
 

@@ -2,6 +2,7 @@ package org.vigi;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Persistable;
 import org.springframework.hateoas.Identifiable;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.hateoas.Identifiable;
  */
 @Builder
 @Getter
-public final class Player implements Identifiable<Long> {
+public final class Player implements Persistable<Long> {
 
     private Long id;
 
@@ -20,4 +21,9 @@ public final class Player implements Identifiable<Long> {
     private boolean active;
 
     private boolean subscriber;
+
+    @Override
+    public boolean isNew() {
+        return id == null;
+    }
 }
