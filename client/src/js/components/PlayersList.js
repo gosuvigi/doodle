@@ -12,7 +12,6 @@ export default class PlayersList extends Component {
         this.handleNavPrev = this.handleNavPrev.bind(this)
         this.handleNavNext = this.handleNavNext.bind(this)
         this.handleNavLast = this.handleNavLast.bind(this)
-        this.handleInput = this.handleInput.bind(this)
     }
 
     handleNavFirst(e) {
@@ -35,18 +34,8 @@ export default class PlayersList extends Component {
         this.props.onNavigate(this.props.links.last.href)
     }
 
-    handleInput(e) {
-        e.preventDefault()
-        var pageSize = React.findDOMNode(this.refs.pageSize).value
-        if (/^[0-9]+$/.test(pageSize)) {
-            this.props.updatePageSize(pageSize)
-        } else {
-            React.findDOMNode(this.refs.pageSize).value = pageSize.substring(0, pageSize.length - 1)
-        }
-    }
-
     render() {
-        const {players, links} = this.props
+        const {players, links, pageMetadata} = this.props
         var playersList = players.map(player =>
             <tr key={player.name}>
                 <td><Link to={player._links.view.href}>{player.name}</Link></td>
@@ -55,22 +44,21 @@ export default class PlayersList extends Component {
         )
 
         var navLinks = [];
-        if ("first" in links) {
+        if ("first" in links && pageMetadata.number > 0) {
             navLinks.push(<li key="first"><a onClick={this.handleNavFirst}>&lt;&lt;</a></li>)
         }
-        if ("prev" in links) {
+        if ("prev" in links && pageMetadata.number > 0) {
             navLinks.push(<li key="prev"><a onClick={this.handleNavPrev}>&lt;</a></li>)
         }
         if ("next" in links) {
             navLinks.push(<li key="next"><a onClick={this.handleNavNext}>&gt;</a></li>)
         }
-        if ("last" in links) {
-            navLinks.push(<li key="last"><a onClick={this.handleNavLast}>&gt;&gt;</a></li>)
+        if ("last" in links && pageMetadata.totalPages > (pageMetadata.number + 1)) {
+            navLinks.push(<li key="last"><a tooltip="Last" onClick={this.handleNavLast}>&gt;&gt;</a></li>)
         }
 
         return (
-            <div className="table-responsive">
-                <input ref="pageSize" defaultValue={this.props.pageSize} onInput={this.handleInput}/>
+            <div>
                 <table className="table table-striped table-hover table-condensed">
                     <thead>
                     <tr>
@@ -83,8 +71,9 @@ export default class PlayersList extends Component {
                     </tbody>
                 </table>
                 <nav>
-                    <ul className="pagination">
+                    <ul className="pager">
                         {navLinks}
+                        <span>{pageMetadata.totalElements} results found. Page {pageMetadata.number + 1} of {pageMetadata.totalPages}.</span>
                     </ul>
                 </nav>
             </div>

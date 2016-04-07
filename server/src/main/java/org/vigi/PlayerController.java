@@ -9,9 +9,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.BasicLinkBuilder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,14 +32,9 @@ class PlayerController {
         this.playerService = playerService;
     }
 
-//    @RequestMapping
-//    Resources<Resource<Player>> playerResources() {
-//        return playersToResource(playerService.getAllPlayers());
-//    }
-
     @RequestMapping
-    PagedResources<Resource<Player>> pagedPlayerResources(Pageable pageable) {
-        Page<Player> playersPaged = playerService.getPlayersPaged(pageable);
+    PagedResources<Resource<Player>> pagedPlayerResources(@RequestParam("q") String searchTerm, Pageable pageable) {
+        Page<Player> playersPaged = playerService.findBySearchTerm(searchTerm, pageable);
         PagedResourcesAssembler<Player> assembler = new PagedResourcesAssembler<>(null, null);
         PagedResources<Resource<Player>> pagedResources = assembler.toResource(playersPaged);
         for (Resource<Player> resource : pagedResources.getContent()) {
@@ -51,16 +44,6 @@ class PlayerController {
         }
         return pagedResources;
     }
-
-//    private Resources<Resource<Player>> playersToResource(List<Player> players) {
-//        List<Resource<Player>> resources = players.stream()
-//                .map(this::playerToResource)
-//                .collect(Collectors.toList());
-//
-//        Link selfLink = linkTo(methodOn(this.getClass()).playerResources())
-//                .withSelfRel();
-//        return new Resources<>(resources, selfLink);
-//    }
 
     @RequestMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     Resource<Player> playerResource(@PathVariable Long id) {

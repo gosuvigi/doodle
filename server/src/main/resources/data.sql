@@ -2,3 +2,4 @@ INSERT INTO PLAYER (name, email, active, subscriber) VALUES ('Lionel Messi', 'me
 INSERT INTO PLAYER (name, email, active, subscriber) VALUES ('Neymar Jr', 'neymar@neymar.com', TRUE, TRUE);
 INSERT INTO PLAYER (name, email, active, subscriber) VALUES ('Luis Suarez', 'suarez@suarez.com', TRUE, TRUE);
 INSERT INTO PLAYER (name, email, active, subscriber) VALUES ('Hodor', 'hodor@hodor.com', TRUE, FALSE);
+INSERT INTO PLAYER (name, email, active, subscriber) VALUES ('Rivaldo', 'rivaldo@rivaldo.com', FALSE, TRUe);
