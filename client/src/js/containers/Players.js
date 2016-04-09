@@ -60,19 +60,19 @@ export default class Players extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSearch} className="form-inline">
+            <div className="form-inline">
                 <div className="form-group">
-                    <label className="sr-only" for="searchPlayers">Search text</label>
+                    <label className="sr-only" htmlFor="searchPlayers">Search text</label>
                     <input type="text" id="searchPlayers" className="form-control"
                            value={this.state.searchTerm} onChange={this.handleChange} placeholder="Search text"/>
                 </div>
-                <button type="submit" className="btn btn-primary">Search</button>
+                <button type="submit" className="btn btn-primary" onClick={this.onSearch}>Search</button>
                 <div className="table-responsive">
                     <PlayersList players={this.state.players} links={this.state.links}
                                  pageMetadata={this.state.pageMetadata}
                                  onNavigate={this.onNavigate}/>
                 </div>
-            </form>
+            </div>
         )
     }
 

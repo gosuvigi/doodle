@@ -3,6 +3,7 @@
  */
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
+import NewPlayer from './NewPlayer'
 
 export default class PlayersList extends Component {
 
@@ -38,6 +39,9 @@ export default class PlayersList extends Component {
         const {players, links, pageMetadata} = this.props
         var playersList = players.map(player =>
             <tr key={player.name}>
+                <td>
+                    <NewPlayer/>
+                </td>
                 <td><Link to={player._links.view.href}>{player.name}</Link></td>
                 <td>{player.email}</td>
                 <td>{player.phone}</td>
@@ -62,10 +66,11 @@ export default class PlayersList extends Component {
         }
 
         return (
-            <div>
+            <div className="table-responsive">
                 <table className="table table-striped table-hover table-condensed">
                     <thead>
                     <tr>
+                        <th>Actions</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>

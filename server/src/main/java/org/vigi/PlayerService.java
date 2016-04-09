@@ -38,4 +38,8 @@ class PlayerService {
         }
         return getPlayersPaged(pageable);
     }
+
+    Player addPlayer(Player player) {
+        return playerRepository.create(player);
+    }
 }

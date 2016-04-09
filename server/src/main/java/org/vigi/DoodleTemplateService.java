@@ -26,8 +26,8 @@ class DoodleTemplateService {
                 .location("the wall")
                 .name("indoor")
                 .title("football indoor")
-                .recipient(Player.builder().id(666L).name("gogu").email("gogu@gogu.com").build())
-                .recipient(Player.builder().id(667L).name("hodor").email("hodor@hodor.com").build())
+//                .recipient(Player.builder().id(666L).name("gogu").email("gogu@gogu.com").build())
+//                .recipient(Player.builder().id(667L).name("hodor").email("hodor@hodor.com").build())
                 .build();
         DoodleTemplate dt2 = DoodleTemplate.builder()
                 .id(2L)
@@ -37,8 +37,8 @@ class DoodleTemplateService {
                 .location("vub")
                 .name("outdoor")
                 .title("football outdoor")
-                .recipient(Player.builder().name("gogu").email("gogu@gogu.com").build())
-                .recipient(Player.builder().name("hodor").email("hodor@hodor.com").build())
+//                .recipient(Player.builder().name("gogu").email("gogu@gogu.com").build())
+//                .recipient(Player.builder().name("hodor").email("hodor@hodor.com").build())
                 .build();
         return Collections.unmodifiableList(Arrays.asList(dt1, dt2));
     }

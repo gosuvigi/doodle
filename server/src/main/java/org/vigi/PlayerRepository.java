@@ -29,14 +29,16 @@ class PlayerRepository extends JdbcRepository<Player, Long> {
         this.jdbcOperations = jdbcOperations;
     }
 
-    private static final RowMapper<Player> ROW_MAPPER = (rs, rowNum) -> Player.builder()
-            .id(rs.getLong("id"))
-            .name(rs.getString("name"))
-            .email(rs.getString("email"))
-            .phone(rs.getString("phone"))
-            .active(rs.getBoolean("active"))
-            .subscriber(rs.getBoolean("subscriber"))
-            .build();
+    private static final RowMapper<Player> ROW_MAPPER = (rs, rowNum) -> {
+        Player p = new Player();
+        p.setId(rs.getLong("id"));
+        p.setName(rs.getString("name"));
+        p.setEmail(rs.getString("email"));
+        p.setPhone(rs.getString("phone"));
+        p.setActive(rs.getBoolean("active"));
+        p.setSubscriber(rs.getBoolean("subscriber"));
+        return p;
+    };
 
     private static final RowUnmapper<Player> ROW_UNMAPPER = player -> {
         Map<String, Object> row = new LinkedHashMap<>();

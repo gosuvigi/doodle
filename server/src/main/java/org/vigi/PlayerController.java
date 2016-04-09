@@ -7,15 +7,16 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.BasicLinkBuilder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
@@ -32,7 +33,7 @@ class PlayerController {
         this.playerService = playerService;
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     PagedResources<Resource<Player>> pagedPlayerResources(@RequestParam("q") String searchTerm, Pageable pageable) {
         Page<Player> playersPaged = playerService.findBySearchTerm(searchTerm, pageable);
         PagedResourcesAssembler<Player> assembler = new PagedResourcesAssembler<>(null, null);
@@ -55,5 +56,14 @@ class PlayerController {
                 .withSelfRel();
         Link viewLink = BasicLinkBuilder.linkToCurrentMapping().slash("players").slash(player.getId()).withRel("view");
         return new Resource<>(player, selfLink, viewLink);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    ResponseEntity<Void> createUser(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
+        Player added = playerService.addPlayer(player);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(added.getId()).toUri());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 }
