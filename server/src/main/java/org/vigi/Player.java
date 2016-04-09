@@ -18,6 +18,8 @@ public final class Player implements Persistable<Long> {
 
     private String email;
 
+    private String phone;
+
     private boolean active;
 
     private boolean subscriber;

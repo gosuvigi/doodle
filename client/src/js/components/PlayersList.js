@@ -40,21 +40,25 @@ export default class PlayersList extends Component {
             <tr key={player.name}>
                 <td><Link to={player._links.view.href}>{player.name}</Link></td>
                 <td>{player.email}</td>
+                <td>{player.phone}</td>
             </tr>
         )
 
         var navLinks = [];
-        if ("first" in links && pageMetadata.number > 0) {
+        if (pageMetadata.number > 0) {
             navLinks.push(<li key="first"><a onClick={this.handleNavFirst}>&lt;&lt;</a></li>)
-        }
-        if ("prev" in links && pageMetadata.number > 0) {
             navLinks.push(<li key="prev"><a onClick={this.handleNavPrev}>&lt;</a></li>)
+        } else {
+            navLinks.push(<li className="disabled" key="first"><span><span aria-hidden="true">&lt;&lt;</span></span></li>)
+            navLinks.push(<li className="disabled" key="prev"><span><span aria-hidden="true">&lt;</span></span></li>)
         }
-        if ("next" in links) {
+
+        if (pageMetadata.totalPages > (pageMetadata.number + 1)) {
             navLinks.push(<li key="next"><a onClick={this.handleNavNext}>&gt;</a></li>)
-        }
-        if ("last" in links && pageMetadata.totalPages > (pageMetadata.number + 1)) {
             navLinks.push(<li key="last"><a tooltip="Last" onClick={this.handleNavLast}>&gt;&gt;</a></li>)
+        } else {
+            navLinks.push(<li className="disabled" key="next"><span><span aria-hidden="true">&gt;</span></span></li>)
+            navLinks.push(<li className="disabled" key="last"><span><span aria-hidden="true">&gt;&gt;</span></span></li>)
         }
 
         return (
@@ -64,6 +68,7 @@ export default class PlayersList extends Component {
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Phone</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -33,6 +33,7 @@ class PlayerRepository extends JdbcRepository<Player, Long> {
             .id(rs.getLong("id"))
             .name(rs.getString("name"))
             .email(rs.getString("email"))
+            .phone(rs.getString("phone"))
             .active(rs.getBoolean("active"))
             .subscriber(rs.getBoolean("subscriber"))
             .build();
@@ -42,6 +43,7 @@ class PlayerRepository extends JdbcRepository<Player, Long> {
         row.put("id", player.getId());
         row.put("name", player.getName());
         row.put("email", player.getEmail());
+        row.put("phone", player.getPhone());
         row.put("active", player.isActive());
         row.put("subscriber", player.isSubscriber());
         return row;

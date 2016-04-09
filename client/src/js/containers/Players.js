@@ -39,8 +39,9 @@ export default class Players extends Component {
     loadFromServer(searchTerm, pageSize) {
         restClient({method: "GET", path: "/api/players", params: {q: searchTerm, size: pageSize}})
             .done(response => {
+                const foundPlayers = response.entity._embedded ? response.entity._embedded.playerList : []
                     this.setState({
-                        players: response.entity._embedded.playerList,
+                        players: foundPlayers,
                         links: response.entity._links,
                         pageMetadata: response.entity.page
                     })
@@ -59,9 +60,13 @@ export default class Players extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSearch}>
-                <input ref="search" type="text" value={this.state.searchTerm} onChange={this.handleChange}/>
-                <button type="submit" className="btn-primary">Search</button>
+            <form onSubmit={this.onSearch} className="form-inline">
+                <div className="form-group">
+                    <label className="sr-only" for="searchPlayers">Search text</label>
+                    <input type="text" id="searchPlayers" className="form-control"
+                           value={this.state.searchTerm} onChange={this.handleChange} placeholder="Search text"/>
+                </div>
+                <button type="submit" className="btn btn-primary">Search</button>
                 <div className="table-responsive">
                     <PlayersList players={this.state.players} links={this.state.links}
                                  pageMetadata={this.state.pageMetadata}
