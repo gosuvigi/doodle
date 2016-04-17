@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
@@ -59,11 +58,21 @@ class PlayerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    ResponseEntity<Void> createUser(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
+    ResponseEntity<Void> createPlayer(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
         Player added = playerService.addPlayer(player);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(added.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    Resource<Player> updatePlayer(@PathVariable Long id, @RequestBody Player player) {
+        return playerToResource(playerService.updatePlayer(player));
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    void deletePlayer(@PathVariable Long id) {
+        playerService.deletePlayer(id);
     }
 }

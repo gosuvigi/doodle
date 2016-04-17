@@ -7,7 +7,8 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import App from './containers/App'
 import DoodlePlannerReact from './containers/DoodlePlannerReact'
 import Players from './containers/Players'
-import Player from './components/Player'
+import NewPlayer from './components/player/NewPlayer'
+import EditPlayer from './components/player/EditPlayer'
 
 //let store = createStore(doodleReducers)
 //
@@ -23,7 +24,8 @@ render((
         <Route path="/" component={App}>
             <IndexRoute component={DoodlePlannerReact}/>
             <Route path="/players" component={Players}/>
-            <Route path="/players/:id" component={Player}/>
+            <Route path="/players/new" component={NewPlayer}/>
+            <Route path="/players/:id" component={EditPlayer}/>
         </Route>
     </Router>
 ), document.getElementById('doodleMainForm'))

@@ -4,17 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by vigi on 3/20/2016.
  */
 @Service
+@Transactional
 class PlayerService {
 
     private final PlayerRepository playerRepository;
@@ -24,14 +21,11 @@ class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    Page<Player> getPlayersPaged(Pageable pageable) {
-        return playerRepository.findAll(pageable);
-    }
-
     Player getPlayer(Long playerId) {
         return playerRepository.findOne(playerId);
     }
 
+    @Transactional(readOnly = true)
     Page<Player> findBySearchTerm(String searchTerm, Pageable pageable) {
         if (StringUtils.hasText(searchTerm)) {
             return playerRepository.findBySearchTerm(searchTerm, pageable);
@@ -39,7 +33,19 @@ class PlayerService {
         return getPlayersPaged(pageable);
     }
 
+    private Page<Player> getPlayersPaged(Pageable pageable) {
+        return playerRepository.findAll(pageable);
+    }
+
     Player addPlayer(Player player) {
         return playerRepository.create(player);
+    }
+
+    Player updatePlayer(Player player) {
+        return playerRepository.update(player);
+    }
+
+    void deletePlayer(Long id) {
+        playerRepository.delete(id);
     }
 }

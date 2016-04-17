@@ -1,9 +1,10 @@
 /**
  * Created by vigi on 4/9/2016.
  */
-import React,{Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import PlayerForm from './PlayerForm'
-import {restClient} from "../utils/restClient"
+import {restClient} from "../../utils/restClient"
+import {browserHistory} from 'react-router'
 
 class NewPlayer extends Component {
 
@@ -21,15 +22,20 @@ class NewPlayer extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        restClient({method: "POST", path: "/api/players", entity: this.state, headers: { 'Content-Type': 'application/json' }})
+        restClient({
+            method: "POST",
+            path: "/api/players",
+            entity: this.state,
+            headers: {'Content-Type': 'application/json'}
+        })
             .done(response => {
-                    JSON.stringify(response)
+                    browserHistory.push("/players")
                 }
             )
     }
 
     handleClose(e) {
-        this.props.history.pushState(null, '/players')
+        browserHistory.push("/players")
     }
 
     render() {

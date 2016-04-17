@@ -1,9 +1,8 @@
 /**
  * Created by vigi on 3/13/2016.
  */
-import React, {Component, PropTypes} from "react"
-import PlayersList from "../components/PlayersList"
-import {allPlayers as allPlayersList} from "../reducers/reducers"
+import React, {Component} from "react"
+import PlayersList from "../components/player/PlayersList"
 import {restClient} from "../utils/restClient"
 
 export default class Players extends Component {
@@ -17,9 +16,6 @@ export default class Players extends Component {
             searchTerm: "",
             pageSize: 2
         }
-        this.onNavigate = this.onNavigate.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.onSearch = this.onSearch.bind(this)
     }
 
     componentDidMount() {
@@ -64,16 +60,15 @@ export default class Players extends Component {
                 <div className="form-group">
                     <label className="sr-only" htmlFor="searchPlayers">Search text</label>
                     <input type="text" id="searchPlayers" className="form-control"
-                           value={this.state.searchTerm} onChange={this.handleChange} placeholder="Search text"/>
+                           value={this.state.searchTerm} onChange={this.handleChange.bind(this)} placeholder="Search text"/>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={this.onSearch}>Search</button>
+                <button type="submit" className="btn btn-primary" onClick={this.onSearch.bind(this)}>Search</button>
                 <div className="table-responsive">
                     <PlayersList players={this.state.players} links={this.state.links}
                                  pageMetadata={this.state.pageMetadata}
-                                 onNavigate={this.onNavigate}/>
+                                 onNavigate={this.onNavigate.bind(this)}/>
                 </div>
             </div>
         )
     }
-
 }

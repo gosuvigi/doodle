@@ -29,8 +29,7 @@ export default class DoodleTemplate extends Component {
                 <div className="form-group">
                     <label htmlFor="location" className="col-sm-2 control-label">Location</label>
                     <div className="col-sm-8">
-                        <input type="text" value={location} ref="location" label="Location"
-                               id="location" placeholder="Location" className="form-control"
+                        <input type="text" value={location} label="Location" placeholder="Location" className="form-control"
                                onChange={this.handleChange.bind(this, 'location')}/>
                     </div>
                 </div>
@@ -38,30 +37,27 @@ export default class DoodleTemplate extends Component {
                     <label htmlFor="dateTime" className="col-sm-2 control-label">Date / Time</label>
                     <div className="col-sm-4">
                         <DateTimePicker format='MMMM Do YYYY, h:mm a' type="text" value={new Date(dateTime)}
-                                        ref="dateTime" id="dateTime"
                                         onChange={this.handleChange.bind(this, 'dateTime')}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="initiator" className="col-sm-2 control-label">Initiator</label>
                     <div className="col-sm-8">
-                        <input type="text" value={initiator} ref="initiator" id="initiator"
-                               placeholder="Initiator" className="form-control"
+                        <input type="text" value={initiator} placeholder="Initiator" className="form-control"
                                onChange={this.handleChange.bind(this, 'initiator')}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="players" className="col-sm-2 control-label">Players</label>
                     <div className="col-sm-8">
-                        <Multiselect data={allPlayers} value={players} ref="players" valueField="name" textField="email"
+                        <Multiselect data={allPlayers} value={players} valueField="name" textField="email"
                                      onChange={value => this.handleChangePlayers(value)} />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="emailText" className="col-sm-2 control-label">Email Text</label>
                     <div className="col-sm-8">
-                        <input type="text" value={emailText} ref="emailText" id="emailText"
-                               placeholder="Email Text" className="form-control"
+                        <input type="text" value={emailText} placeholder="Email Text" className="form-control"
                                onChange={this.handleChange.bind(this, 'emailText')}/>
                     </div>
                 </div>
