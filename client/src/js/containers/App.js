@@ -7,6 +7,7 @@ import { Link, IndexLink } from 'react-router'
 import '../../css/bootstrap.css'
 import '../../css/react-widgets.css'
 import '../../css/doodle.css'
+import '../../css/quill.snow.css'
 
 class App extends Component {
     render() {

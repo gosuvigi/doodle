@@ -5,84 +5,9 @@
 // import { reducer as formReducer } from 'redux-form'
 import { LOAD_DOODLE_TEMPLATES, SELECT_DOODLE_TEMPLATE } from '../actions/actions'
 
-export const allPlayers = [
-    {
-        id: 1,
-        name: "messi",
-        email: "messi@fcb.com",
-        "_links" : {
-            "self" : {
-                "href" : "http://localhost:8080/api/players/messi"
-            }
-        }
-    },
-    {
-        id: 2,
-        name: "neymar",
-        email: "neymar@fcb.com",
-        "_links" : {
-            "self" : {
-                "href" : "http://localhost:8080/api/players/neymar"
-            }
-        }
-    },
-    {
-        id: 3,
-        name: "suarez",
-        email: "suarez@fcb.com",
-        "_links" : {
-            "self" : {
-                "href" : "http://localhost:8080/api/players/suarez"
-            }
-        }
-    },
-    {
-        id: 4,
-        name: "hodor",
-        email: "hodor@fcb.com",
-        "_links" : {
-            "self" : {
-                "href" : "http://localhost:8080/api/players/hodor"
-            }
-        }
-    }
-]
-
 export const initialState = {
     selectedTemplate: {},
-    templates: [{
-        title: "Monday VUB",
-        location: "VUB 1",
-        dateTime: new Date(),
-        initiator: "vigi",
-        players: [
-            {
-                name: "messi",
-                email: "messi@fcb.com"
-            },
-            {
-                name: "neymar",
-                email: "neymar@fcb.com"
-            },
-            {
-                name: "suarez",
-                email: "suarez@fcb.com"
-            }
-        ],
-        emailText: "gogo"
-    }, {
-        title: "Friday VUB",
-        location: "VUB 2",
-        dateTime: new Date(),
-        initiator: "hodor",
-        players: [
-            {
-                name: "hodor",
-                email: "hodor@fcb.com"
-            }
-        ],
-        emailText: "hodor?"
-    }]
+    templates: []
 }
 
 function selectDoodleTemplate(previousState = initialState.selectedTemplate, action = '') {

@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from 'react'
 import Multiselect from 'react-widgets/lib/Multiselect'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-
+import ReactQuill from 'react-quill'
 
 export default class DoodleTemplate extends Component {
 
@@ -61,8 +61,7 @@ export default class DoodleTemplate extends Component {
                 <div className="form-group">
                     <label htmlFor="emailText" className="col-sm-2 control-label">Email Text</label>
                     <div className="col-sm-8">
-                        <input type="text" value={emailText} placeholder="Email Text" className="form-control"
-                               onChange={this.handleChange.bind(this, 'emailText')}/>
+                    <ReactQuill value={emailText} onChange={val => this.props.handleChange('emailText', val)} theme='snow'/>
                     </div>
                 </div>
             </div>

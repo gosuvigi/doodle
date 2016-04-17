@@ -32,7 +32,7 @@ class DoodleTemplateService {
         DoodleTemplate dt2 = DoodleTemplate.builder()
                 .id(2L)
                 .dateTime(LocalDateTime.now().plusMinutes(15))
-                .emailText("please come before 20:50")
+                .emailText("<h2>please</h2> come <b>before 20:50</b>")
                 .initiator("hodor 2")
                 .location("vub")
                 .name("outdoor")
