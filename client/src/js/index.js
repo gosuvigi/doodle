@@ -9,6 +9,8 @@ import DoodlePlannerReact from './containers/DoodlePlannerReact'
 import Players from './containers/Players'
 import NewPlayer from './components/player/NewPlayer'
 import EditPlayer from './components/player/EditPlayer'
+import momentLocalizer from 'react-widgets/lib/localizers/moment'
+import Moment from 'moment'
 
 //let store = createStore(doodleReducers)
 //
@@ -18,6 +20,9 @@ import EditPlayer from './components/player/EditPlayer'
 //    </Provider>,
 //    document.getElementById('doodleMainForm')
 //)
+
+momentLocalizer(Moment)
+Moment.locale('en')
 
 render((
     <Router history={browserHistory}>

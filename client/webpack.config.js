@@ -52,12 +52,6 @@ module.exports = {
                 include: srcPath
             },
             {
-                test: /\.json$/,
-                loaders: ['json'],
-                exclude: /node_modules/,
-                include: __dirname
-            },
-            {
                 test: /\.css$/,
                 exclude: /node_modules/,
                 loaders: ['style', 'css'],

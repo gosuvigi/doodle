@@ -1,10 +1,10 @@
 /**
  * Created by vigi on 2/23/2016.
  */
-import React, {Component, PropTypes} from 'react'
-import {DropdownList} from 'react-widgets'
+import React, {Component} from 'react'
+import DropdownList from 'react-widgets/lib/DropdownList'
 import DoodleTemplate from './../components/DoodleTemplate'
-import {initialState, allPlayers as allPlayersList} from '../reducers/reducers'
+import {initialState} from '../reducers/reducers'
 import {restClient} from '../utils/restClient'
 
 export default class DoodlePlannerReact extends Component {
@@ -13,7 +13,7 @@ export default class DoodlePlannerReact extends Component {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
-            selectedTemplate: {},
+            selectedTemplate: {dateTime: new Date()},
             templates: initialState.templates,
             allPlayers: []
         }

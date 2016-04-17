@@ -1,8 +1,8 @@
 /**
  * Created by vigi on 2/7/2016.
  */
-import { combineReducers } from 'redux'
-import { reducer as formReducer } from 'redux-form'
+// import { combineReducers } from 'redux'
+// import { reducer as formReducer } from 'redux-form'
 import { LOAD_DOODLE_TEMPLATES, SELECT_DOODLE_TEMPLATE } from '../actions/actions'
 
 export const allPlayers = [
@@ -104,10 +104,10 @@ function loadDoodleTemplates(previousState = initialState.templates, action = ''
 }
 
 
-const doodleReducers = combineReducers({
-    selectedTemplate: selectDoodleTemplate,
-    templates: loadDoodleTemplates,
-    form: formReducer // Mounted at 'form', redux-form
-})
-
-export default doodleReducers
+// const doodleReducers = combineReducers({
+//     selectedTemplate: selectDoodleTemplate,
+//     templates: loadDoodleTemplates,
+//     form: formReducer // Mounted at 'form', redux-form
+// })
+//
+// export default doodleReducers
