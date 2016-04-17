@@ -1,33 +1,35 @@
 /**
- * Created by ratoico on 9/4/15.
+ * Created by vigi on 4/17/2016 11:58 AM.
  */
 var webpack = require('webpack');
-var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'dist', '');
-var mainPath = path.resolve(__dirname, 'src/js', 'index');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-//var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
+var mainPath = path.resolve(__dirname, 'src/js', 'index');
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
-var config = {
-
-    // We change to normal source mapping
-    devtool: 'source-map',
+module.exports = {
     entry: mainPath,
     output: {
-        path: buildPath,
-        filename: 'bundle.js'
+        path: __dirname + "/dist",
+        filename: "bundle.js"
     },
+
     module: {
         loaders: [
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css-loader'),
-                exclude: [nodeModulesPath],
+                test: /\.json$/,
+                loader: "json"
             },
             {
-                test: /\.less$/, loaders: ['style-loader', 'css-loader', 'less-loader'],
-                exclude: [nodeModulesPath]
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel'
+            },
+            {
+                test: /\.css$/,
+                // loader: ExtractTextPlugin.extract('style', 'css?modules!postcss')
+                loader: ExtractTextPlugin.extract('css-loader'),
             },
             {
                 test: /\.gif$/,
@@ -49,31 +51,23 @@ var config = {
                 loaders: ['file-loader?name=[path][name].[ext]'],
                 exclude: [nodeModulesPath]
             },
-            {
-                test: /\.js$/,
-                loader: 'babel',
-                exclude: [nodeModulesPath]
-            }
         ]
     },
+    postcss: [
+        require('autoprefixer')
+    ],
+
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        // removes a lot of debugging code in React
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: __dirname + "/src/html/index.html",
+            filename: "index.html"
+        }),
         new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
+            'process.env.NODE_ENV': '"production"'
         }),
-        // keeps hashes consistent between compilations
         new webpack.optimize.OccurenceOrderPlugin(),
-        // minifies your code
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                warnings: false
-            }
-        }),
+        new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin('style.css', {allChunks: true})
     ]
-};
-
-module.exports = config;
+}

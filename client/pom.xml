@@ -19,23 +19,23 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>0.0.25</version>
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals><goal>install-node-and-npm</goal></goals>
-						<configuration>
-							<nodeVersion>v0.12.5</nodeVersion>
-							<npmVersion>2.11.2</npmVersion>
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals><goal>npm</goal></goals>
-					</execution>
+			<!--<plugin>-->
+				<!--<groupId>com.github.eirslett</groupId>-->
+				<!--<artifactId>frontend-maven-plugin</artifactId>-->
+				<!--<version>1.0</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>install node and npm</id>-->
+						<!--<goals><goal>install-node-and-npm</goal></goals>-->
+						<!--<configuration>-->
+							<!--<nodeVersion>v0.12.5</nodeVersion>-->
+							<!--<npmVersion>2.11.2</npmVersion>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+					<!--<execution>-->
+						<!--<id>npm install</id>-->
+						<!--<goals><goal>npm</goal></goals>-->
+					<!--</execution>-->
 					<!--<execution>-->
 						<!--<id>jspm-install</id>-->
 						<!--<goals><goal>npm</goal></goals>-->
@@ -43,13 +43,13 @@
 							<!--<arguments>run jspm-install</arguments>-->
 						<!--</configuration>-->
 					<!--</execution>-->
-					<execution>
-						<id>npm build</id>
-						<goals><goal>npm</goal></goals>
-						<configuration>
-							<arguments>run build-production</arguments>
-						</configuration>
-					</execution>
+					<!--<execution>-->
+						<!--<id>npm build</id>-->
+						<!--<goals><goal>npm</goal></goals>-->
+						<!--<configuration>-->
+							<!--<arguments>run build-production</arguments>-->
+						<!--</configuration>-->
+					<!--</execution>-->
                     <!--<execution>-->
                         <!--<id>gulp build</id>-->
                         <!--<goals>-->
@@ -65,6 +65,26 @@
                             <!--<arguments>build</arguments>-->
                         <!--</configuration>-->
                     <!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>exec-npm-build-production</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>build-prod</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>

@@ -33,7 +33,8 @@ class PlayerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    PagedResources<Resource<Player>> pagedPlayerResources(@RequestParam("q") String searchTerm, Pageable pageable) {
+    PagedResources<Resource<Player>> pagedPlayerResources(
+            @RequestParam(value = "q", required = false) String searchTerm, Pageable pageable) {
         Page<Player> playersPaged = playerService.findBySearchTerm(searchTerm, pageable);
         PagedResourcesAssembler<Player> assembler = new PagedResourcesAssembler<>(null, null);
         PagedResources<Resource<Player>> pagedResources = assembler.toResource(playersPaged);

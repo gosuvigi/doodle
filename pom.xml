@@ -28,21 +28,4 @@
 		<doodle.build.timestamp>${maven.build.timestamp}</doodle.build.timestamp>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-		    <name>spring-snapshots</name>
-			<snapshots/>
-			<url>http://repo.spring.io/libs-snapshot</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>spring-snapshots</name>
-			<snapshots/>
-			<url>http://repo.spring.io/libs-snapshot</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 </project>

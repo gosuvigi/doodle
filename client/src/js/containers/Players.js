@@ -59,7 +59,7 @@ export default class Players extends Component {
             <div className="form-inline">
                 <div className="form-group">
                     <label className="sr-only" htmlFor="searchPlayers">Search text</label>
-                    <input type="text" id="searchPlayers" className="form-control"
+                    <input type="search" id="searchPlayers" className="form-control"
                            value={this.state.searchTerm} onChange={this.handleChange.bind(this)} placeholder="Search text"/>
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={this.onSearch.bind(this)}>Search</button>

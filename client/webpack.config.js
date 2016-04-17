@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var srcPath = path.join(__dirname, 'src')
 var WriteFilePlugin = require('write-file-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -31,10 +32,15 @@ module.exports = {
         index: '/static'
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: __dirname + "/src/html/index.html",
+            filename: "index.html"
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        // this plugin is needed to be able to server the static resource with Spring Boot embedded server as well
+        // this plugin is needed to be able to serve the static resources with Spring Boot embedded server as well
         new WriteFilePlugin()
     ],
     module: {

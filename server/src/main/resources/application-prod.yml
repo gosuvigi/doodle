@@ -6,12 +6,13 @@ last:
     date: @doodle.build.timestamp@
 
 server:
-  servlet-path: /doodle
+  servlet-path: /
 
 spring:
   mvc:
     favicon:
       enabled: false
   thymeleaf:
-    cache: false
+    cache: true
+    mode: LEGACYHTML5
     prefix: classpath:static/

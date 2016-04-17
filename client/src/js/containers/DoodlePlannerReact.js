@@ -1,10 +1,10 @@
 /**
  * Created by vigi on 2/23/2016.
  */
-import React, { Component, PropTypes } from 'react'
-import { DropdownList } from 'react-widgets'
+import React, {Component, PropTypes} from 'react'
+import {DropdownList} from 'react-widgets'
 import DoodleTemplate from './../components/DoodleTemplate'
-import { initialState, allPlayers as allPlayersList } from '../reducers/reducers'
+import {initialState, allPlayers as allPlayersList} from '../reducers/reducers'
 import {restClient} from '../utils/restClient'
 
 export default class DoodlePlannerReact extends Component {
@@ -15,7 +15,7 @@ export default class DoodlePlannerReact extends Component {
         this.state = {
             selectedTemplate: {},
             templates: initialState.templates,
-            allPlayers: allPlayersList
+            allPlayers: []
         }
     }
 
@@ -34,9 +34,14 @@ export default class DoodlePlannerReact extends Component {
             .done(response => {
                 const loadedTemplates = response.entity._embedded.doodleTemplateList
                 this.setState({
-                    selectedTemplate: {},
                     templates: loadedTemplates,
-                    allPlayers: allPlayersList
+                })
+            })
+        restClient({method: 'GET', path: '/api/players'})
+            .done(response => {
+                const all = response.entity._embedded.playerList
+                this.setState({
+                    allPlayers: all,
                 })
             })
     }

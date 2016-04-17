@@ -38,7 +38,7 @@ app.use('/api', (req, res) => {
 });
 
 app.get("/", function (req, res) {
-    res.sendFile(__dirname + '/src/html/index.html')
+    res.sendFile(__dirname + '/static/index.html')
 });
 
 app.listen(port, function (error) {
