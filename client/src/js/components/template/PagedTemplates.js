@@ -1,16 +1,11 @@
 /**
- * Created by vigi on 2/27/2016 1:10 PM.
+ * Created by vigi on 4/23/2016 11:37 AM.
  */
 import React, {Component} from 'react'
 import {Link} from 'react-router'
-import DeletePlayer from './DeletePlayer'
 
-export default class PagedPlayers extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+export default class PagedTemplates extends Component {
+    
     handleNavFirst(e) {
         e.preventDefault()
         this.props.onNavigate(this.props.links.first.href)
@@ -32,17 +27,15 @@ export default class PagedPlayers extends Component {
     }
 
     render() {
-        const {players, pageMetadata} = this.props
-        var playersList = players.map(player =>
-            <tr key={player.id}>
+        const {templates, pageMetadata} = this.props
+        var templatesList = templates.map(template =>
+            <tr key={template.id}>
                 <td>
-                    <DeletePlayer playerId={player.id} key={player.id}/>
-                    <Link to="/players/new" data-toggle="tooltip" title="Add a new player"><span className="glyphicon glyphicon-plus-sign"/></Link>
-                    <a href={"#deletePlayer" + player.id}><span className="glyphicon glyphicon-minus-sign"/></a>
+                    <Link to="/templates/new" data-toggle="tooltip" title="Add a new template"><span className="glyphicon glyphicon-plus-sign"/></Link>
+                    <a href={"#deleteTemplate" + template.id}><span className="glyphicon glyphicon-minus-sign"/></a>
                 </td>
-                <td><Link to={player._links.view.href}>{player.name}</Link></td>
-                <td>{player.email}</td>
-                <td>{player.phone}</td>
+                <td><Link to={template._links.view.href}>{template.name}</Link></td>
+                <td>{template.dateTime}</td>
             </tr>
         )
 
@@ -70,12 +63,11 @@ export default class PagedPlayers extends Component {
                     <tr>
                         <th>Actions</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+                        <th>Date</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {playersList}
+                    {templatesList}
                     </tbody>
                 </table>
                 <nav>

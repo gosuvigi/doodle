@@ -9,6 +9,7 @@ import DoodlePlannerReact from './containers/DoodlePlannerReact'
 import SearchPlayers from './components/player/SearchPlayers'
 import NewPlayer from './components/player/NewPlayer'
 import EditPlayer from './components/player/EditPlayer'
+import SearchTemplates from './components/template/SearchTemplates'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import Moment from 'moment'
 
@@ -31,6 +32,7 @@ render((
             <Route path="/players" component={SearchPlayers}/>
             <Route path="/players/new" component={NewPlayer}/>
             <Route path="/players/:id" component={EditPlayer}/>
+            <Route path="/templates" component={SearchTemplates}/>
         </Route>
     </Router>
 ), document.getElementById('doodleMainForm'))

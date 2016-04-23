@@ -1,4 +1,4 @@
-package org.vigi;
+package org.vigi.player;
 
 import com.nurkiewicz.jdbcrepository.JdbcRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.vigi.domain.Player;
 
 import java.util.*;
 
@@ -18,14 +19,14 @@ import java.util.*;
 @Repository
 class PlayerRepository extends JdbcRepository<Player, Long> {
 
-    private static final String BASIC_QUERY = " FROM PLAYER where lower(NAME) like ? or lower(EMAIL) like ?";
+    private static final String BASIC_QUERY = " FROM PLAYERS where lower(NAME) like ? or lower(EMAIL) like ?";
     private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(NAME) ASC LIMIT ? OFFSET ?";
 
     private final JdbcOperations jdbcOperations;
 
     @Autowired
     PlayerRepository(JdbcOperations jdbcOperations) {
-        super(ROW_MAPPER, ROW_UNMAPPER, "PLAYER");
+        super(ROW_MAPPER, ROW_UNMAPPER, "PLAYERS");
         this.jdbcOperations = jdbcOperations;
     }
 

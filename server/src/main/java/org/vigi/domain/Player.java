@@ -1,11 +1,7 @@
-package org.vigi;
+package org.vigi.domain;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Persistable;
-import org.springframework.hateoas.Identifiable;
 
 /**
  * Created by ratoico on 8/17/15 5:34 PM.

@@ -1,4 +1,4 @@
-package org.vigi;
+package org.vigi.player;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.vigi.domain.Player;
 
 /**
  * Created by vigi on 3/20/2016.

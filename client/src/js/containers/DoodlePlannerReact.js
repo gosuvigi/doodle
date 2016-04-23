@@ -10,7 +10,6 @@ export default class DoodlePlannerReact extends Component {
 
     constructor(props) {
         super(props)
-        this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
             selectedTemplate: {dateTime: new Date()},
             templates: [],
@@ -33,14 +32,14 @@ export default class DoodlePlannerReact extends Component {
             .done(response => {
                 const loadedTemplates = response.entity._embedded.doodleTemplateList
                 this.setState({
-                    templates: loadedTemplates,
+                    templates: loadedTemplates
                 })
             })
         restClient({method: 'GET', path: '/api/players'})
             .done(response => {
                 const all = response.entity._embedded.playerList
                 this.setState({
-                    allPlayers: all,
+                    allPlayers: all
                 })
             })
     }
@@ -61,7 +60,7 @@ export default class DoodlePlannerReact extends Component {
         const submitting = false
 
         return (
-            <form onSubmit={this.handleSubmit} className="form-horizontal">
+            <form onSubmit={this.handleSubmit.bind(this)} className="form-horizontal">
                 <div className="form-group">
                     <label htmlFor="templates" className="col-sm-2 control-label">Template</label>
                     <div className="col-sm-4">

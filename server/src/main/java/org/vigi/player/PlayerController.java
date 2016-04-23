@@ -1,4 +1,4 @@
-package org.vigi;
+package org.vigi.player;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.vigi.domain.Player;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -39,9 +40,7 @@ class PlayerController {
         PagedResourcesAssembler<Player> assembler = new PagedResourcesAssembler<>(null, null);
         PagedResources<Resource<Player>> pagedResources = assembler.toResource(playersPaged);
         for (Resource<Player> resource : pagedResources.getContent()) {
-            Link viewLink = BasicLinkBuilder.linkToCurrentMapping().slash("players")
-                    .slash(resource.getContent().getId()).withRel("view");
-            resource.add(viewLink);
+            resource.add(buildViewLink(resource.getContent()));
         }
         return pagedResources;
     }
@@ -52,10 +51,12 @@ class PlayerController {
     }
 
     private Resource<Player> playerToResource(Player player) {
-        Link selfLink = linkTo(methodOn(this.getClass()).playerResource(player.getId()))
-                .withSelfRel();
-        Link viewLink = BasicLinkBuilder.linkToCurrentMapping().slash("players").slash(player.getId()).withRel("view");
-        return new Resource<>(player, selfLink, viewLink);
+        Link selfLink = linkTo(methodOn(this.getClass()).playerResource(player.getId())).withSelfRel();
+        return new Resource<>(player, selfLink, buildViewLink(player));
+    }
+
+    private Link buildViewLink(Player player) {
+        return BasicLinkBuilder.linkToCurrentMapping().slash("players").slash(player.getId()).withRel("view");
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
