@@ -60,7 +60,7 @@ class DoodleTemplateController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    ResponseEntity<Void> createPlayer(@RequestBody DoodleTemplate template, UriComponentsBuilder ucBuilder) {
+    ResponseEntity<Void> createTemplate(@RequestBody DoodleTemplate template, UriComponentsBuilder ucBuilder) {
         DoodleTemplate added = templateService.addDoodleTemplate(template);
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,12 +69,12 @@ class DoodleTemplateController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
-    Resource<DoodleTemplate> updatePlayer(@PathVariable Long id, @RequestBody DoodleTemplate template) {
+    Resource<DoodleTemplate> updateTemplate(@PathVariable Long id, @RequestBody DoodleTemplate template) {
         return templateToResource(templateService.updateDoodleTemplate(template));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    void deletePlayer(@PathVariable Long id) {
+    void deleteTemplate(@PathVariable Long id) {
         templateService.deleteDoodleTemplate(id);
     }
 

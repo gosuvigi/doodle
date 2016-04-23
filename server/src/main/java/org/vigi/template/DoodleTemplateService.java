@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.vigi.domain.DoodleTemplate;
+import org.vigi.domain.Player;
+import org.vigi.player.PlayerRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vigi on 3/20/2016.
@@ -18,18 +21,18 @@ import java.util.List;
 class DoodleTemplateService {
 
     private final DoodleTemplateRepository templateRepository;
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    DoodleTemplateService(DoodleTemplateRepository templateRepository) {
+    DoodleTemplateService(DoodleTemplateRepository templateRepository, PlayerRepository playerRepository) {
         this.templateRepository = templateRepository;
+        this.playerRepository = playerRepository;
     }
 
     DoodleTemplate getDoodleTemplate(Long templateId) {
-        return templateRepository.findOne(templateId);
-    }
-
-    List<DoodleTemplate> findAllTemplate() {
-        return templateRepository.findAll();
+        DoodleTemplate template = templateRepository.findOne(templateId);
+        template.setPlayers(playerRepository.findPlayersForTemplate(templateId));
+        return template;
     }
 
     @Transactional(readOnly = true)
@@ -45,11 +48,20 @@ class DoodleTemplateService {
     }
 
     DoodleTemplate addDoodleTemplate(DoodleTemplate template) {
-        return templateRepository.create(template);
+        DoodleTemplate added = templateRepository.create(template);
+        addPlayersToTemplate(template);
+        return added;
+    }
+
+    private void addPlayersToTemplate(DoodleTemplate template) {
+        List<Long> playerIds = template.getPlayers().stream().map(Player::getId).collect(Collectors.toList());
+        templateRepository.addPlayersToTemplate(template.getId(), playerIds);
     }
 
     DoodleTemplate updateDoodleTemplate(DoodleTemplate template) {
-        return templateRepository.update(template);
+        DoodleTemplate updated = templateRepository.update(template);
+        addPlayersToTemplate(updated);
+        return updated;
     }
 
     void deleteDoodleTemplate(Long id) {

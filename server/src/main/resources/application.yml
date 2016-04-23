@@ -8,3 +8,6 @@ spring:
   thymeleaf:
     cache: false
     prefix: classpath:html/
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true

@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react'
 import {Link} from 'react-router'
+import DeleteTemplate from './DeleteTemplate'
 
 export default class PagedTemplates extends Component {
     
@@ -31,6 +32,7 @@ export default class PagedTemplates extends Component {
         var templatesList = templates.map(template =>
             <tr key={template.id}>
                 <td>
+                    <DeleteTemplate templateId={template.id} key={template.id}/>
                     <Link to="/templates/new" data-toggle="tooltip" title="Add a new template"><span className="glyphicon glyphicon-plus-sign"/></Link>
                     <a href={"#deleteTemplate" + template.id}><span className="glyphicon glyphicon-minus-sign"/></a>
                 </td>

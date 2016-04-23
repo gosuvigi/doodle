@@ -11,10 +11,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.vigi.domain.DoodleTemplate;
 
-import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by vigi on 4/23/2016.
@@ -33,16 +33,21 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         this.jdbcOperations = jdbcOperations;
     }
 
+    @Override
+    protected <S extends DoodleTemplate> S postCreate(S entity, Number generatedId) {
+        entity.setId(generatedId.longValue());
+        return entity;
+    }
+
     private static final RowMapper<DoodleTemplate> ROW_MAPPER = (rs, rowNum) -> {
-        Timestamp matchDate = rs.getTimestamp("MATCH_DATE");
-        return DoodleTemplate.builder()
-                .id(rs.getLong("ID"))
-                .name(rs.getString("NAME"))
-                .location(rs.getString("LOCATION"))
-                .initiator(rs.getString("INITIATOR"))
-                .matchDate(null)
-                .emailText(rs.getString("EMAIL_TEXT"))
-                .build();
+        DoodleTemplate template = new DoodleTemplate();
+        template.setId(rs.getLong("ID"));
+        template.setName(rs.getString("NAME"));
+        template.setLocation(rs.getString("LOCATION"));
+        template.setInitiator(rs.getString("INITIATOR"));
+        template.setEmailText(rs.getString("EMAIL_TEXT"));
+        template.setMatchDate(rs.getTimestamp("MATCH_DATE"));
+        return template;
     };
 
     private static final RowUnmapper<DoodleTemplate> ROW_UNMAPPER = player -> {
@@ -65,4 +70,26 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         return new PageImpl<>(players, pageable, count);
     }
 
+    void addPlayersToTemplate(Long templateId, List<Long> playerIds) {
+        deletePreviousPlayers(templateId);
+        addNewPlayers(templateId, playerIds);
+    }
+
+    private void deletePreviousPlayers(Long templateId) {
+        jdbcOperations.update("DELETE FROM TEMPLATES_PLAYERS_INT where TEMPLATE_ID = ?",
+                new Object[]{templateId});
+    }
+
+    private void addNewPlayers(Long templateId, List<Long> playerIds) {
+        List<Object[]> batch = playerIds.stream().map(
+                playerId -> new Object[]{templateId, playerId}).collect(Collectors.toList());
+        jdbcOperations.batchUpdate(
+                "INSERT INTO TEMPLATES_PLAYERS_INT (TEMPLATE_ID, PLAYER_ID) VALUES (?, ?)", batch);
+    }
+
+    @Override
+    public void delete(Long templateId) {
+        deletePreviousPlayers(templateId);
+        super.delete(templateId);
+    }
 }

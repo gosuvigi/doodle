@@ -65,9 +65,8 @@ export default class DoodlePlannerReact extends Component {
                     <label htmlFor="templates" className="col-sm-2 control-label">Template</label>
                     <div className="col-sm-4">
                         <DropdownList
-                            id="templates"
                             data={this.state.templates}
-                            textField='title'
+                            textField='name'
                             onChange={value => this.setState({ selectedTemplate: value })}/>
                     </div>
                 </div>

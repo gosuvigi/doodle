@@ -1,31 +1,35 @@
 /**
- * Created by vigi on 2/6/2016.
+ * Created by vigi on 4/23/2016 1:40 PM.
  */
 import React, {Component, PropTypes} from 'react'
-import Multiselect from '../../../../node_modules/react-widgets/lib/Multiselect'
-import DateTimePicker from '../../../../node_modules/react-widgets/lib/DateTimePicker'
+import Multiselect from 'react-widgets/lib/Multiselect'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import ReactQuill from 'react-quill'
 
-export default class DoodleTemplate extends Component {
-
-    constructor(props) {
-        super(props)
-    }
+class TemplateForm extends Component {
 
     handleChange(field, e) {
-        this.props.handleChange(field, e.target.value);
+        this.props.handleChange(field, e.target.value)
     }
 
-    handleChangePlayers(players) {
-        this.props.handleChangePlayers(players)
+    handleClose(e) {
+        e.preventDefault()
+        this.props.handleClose(e)
     }
 
     render() {
-        const {location, matchDate, initiator, players, emailText} = this.props.template
+        const {name, location, matchDate, initiator, players, emailText} = this.props.template
         const allPlayers = this.props.allPlayers
-
         return (
-            <div>
+            <form onSubmit={this.props.handleSubmit.bind(this)} className="form-horizontal">
+                <div className="form-group">
+                    <label htmlFor="name" className="col-sm-2 control-label">Name</label>
+                    <div className="col-sm-8">
+                        <input type="text" value={name} label="Name" placeholder="Name"
+                               className="form-control"
+                               onChange={this.handleChange.bind(this, 'name')}/>
+                    </div>
+                </div>
                 <div className="form-group">
                     <label htmlFor="location" className="col-sm-2 control-label">Location</label>
                     <div className="col-sm-8">
@@ -35,7 +39,7 @@ export default class DoodleTemplate extends Component {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="dateTime" className="col-sm-2 control-label">Date / Time</label>
+                    <label htmlFor="dateTime" className="col-sm-2 control-label">Match Date</label>
                     <div className="col-sm-4">
                         <DateTimePicker type="text" value={new Date(matchDate)}
                                         onChange={val => this.props.handleChange('matchDate', val)}/>
@@ -52,28 +56,40 @@ export default class DoodleTemplate extends Component {
                     <label htmlFor="players" className="col-sm-2 control-label">Players</label>
                     <div className="col-sm-8">
                         <Multiselect data={allPlayers} value={players} valueField="name" textField="email"
-                                     onChange={value => this.handleChangePlayers(value)}/>
+                                     onChange={value => this.props.handleChangePlayers(value)}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="emailText" className="col-sm-2 control-label">Email Text</label>
                     <div className="col-sm-8">
-                    <ReactQuill value={emailText} onChange={val => this.props.handleChange('emailText', val)} theme='snow'/>
+                        <ReactQuill value={emailText} onChange={val => this.props.handleChange('emailText', val)}
+                                    theme='snow'/>
                     </div>
                 </div>
-            </div>
+                <div className="form-group">
+                    <div className="col-sm-6 col-sm-offset-2">
+                        <button type="submit" className="btn btn-primary">Save</button>
+                        <button onClick={this.handleClose.bind(this)} className="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
         )
     }
 }
 
-DoodleTemplate.propTypes = {
-    template: PropTypes.object.isRequired,
-    location: PropTypes.string,
-    dateTime: PropTypes.object,
-    initiator: PropTypes.string,
-    players: PropTypes.array,
-    emailText: PropTypes.string,
+TemplateForm.propTypes = {
+    template: PropTypes.shape({
+        name: PropTypes.string,
+        location: PropTypes.string,
+        matchDate: PropTypes.object,
+        initiator: PropTypes.string,
+        players: PropTypes.array,
+        emailText: PropTypes.string
+    }).isRequired,
     handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
     handleChangePlayers: PropTypes.func.isRequired
 }
 
+export default TemplateForm

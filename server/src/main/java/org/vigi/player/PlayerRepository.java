@@ -17,10 +17,12 @@ import java.util.*;
  * Created by vigi on 4/6/2016.
  */
 @Repository
-class PlayerRepository extends JdbcRepository<Player, Long> {
+public class PlayerRepository extends JdbcRepository<Player, Long> {
 
     private static final String BASIC_QUERY = " FROM PLAYERS where lower(NAME) like ? or lower(EMAIL) like ?";
     private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(NAME) ASC LIMIT ? OFFSET ?";
+    private static final String PLAYERS_TEMPLATE_QUERY = "SELECT * FROM PLAYERS p INNER JOIN TEMPLATES_PLAYERS_INT tp " +
+            "on p.Id = tp.PLAYER_ID where tp.TEMPLATE_ID = ?";
 
     private final JdbcOperations jdbcOperations;
 
@@ -59,5 +61,10 @@ class PlayerRepository extends JdbcRepository<Player, Long> {
         List<Player> players = jdbcOperations.query("SELECT * " + FULL_QUERY, params, ROW_MAPPER);
         int count = jdbcOperations.queryForObject("SELECT COUNT(1) " + BASIC_QUERY, new Object[]{q, q}, Integer.class);
         return new PageImpl<>(players, pageable, count);
+    }
+
+    public List<Player> findPlayersForTemplate(Long templateId) {
+        Object[] params = new Object[]{templateId};
+        return jdbcOperations.query(PLAYERS_TEMPLATE_QUERY, params, ROW_MAPPER);
     }
 }

@@ -18,7 +18,7 @@
 
 	<properties>
 		<start-class>org.vigi.Application</start-class>
-        <lombok.version>1.16.4</lombok.version>
+        <lombok.version>1.16.8</lombok.version>
     </properties>
 
 	<dependencies>
