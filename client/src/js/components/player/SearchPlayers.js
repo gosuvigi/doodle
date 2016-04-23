@@ -2,10 +2,10 @@
  * Created by vigi on 3/13/2016.
  */
 import React, {Component} from "react"
-import PlayersList from "../components/player/PlayersList"
-import {restClient} from "../utils/restClient"
+import PagedPlayers from "./PagedPlayers"
+import {restClient} from "../../utils/restClient"
 
-export default class Players extends Component {
+export default class SearchPlayers extends Component {
 
     constructor(props) {
         super(props)
@@ -64,9 +64,9 @@ export default class Players extends Component {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={this.onSearch.bind(this)}>Search</button>
                 <div className="table-responsive">
-                    <PlayersList players={this.state.players} links={this.state.links}
-                                 pageMetadata={this.state.pageMetadata}
-                                 onNavigate={this.onNavigate.bind(this)}/>
+                    <PagedPlayers players={this.state.players} links={this.state.links}
+                                  pageMetadata={this.state.pageMetadata}
+                                  onNavigate={this.onNavigate.bind(this)}/>
                 </div>
             </div>
         )

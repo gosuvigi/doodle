@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router'
 import DeletePlayer from './DeletePlayer'
 
-export default class PlayersList extends Component {
+export default class PagedPlayers extends Component {
 
     constructor(props) {
         super(props)

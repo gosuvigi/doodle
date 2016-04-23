@@ -6,7 +6,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 //import doodleReducers from './reducers/reducers'
 import App from './containers/App'
 import DoodlePlannerReact from './containers/DoodlePlannerReact'
-import Players from './containers/Players'
+import SearchPlayers from './components/player/SearchPlayers'
 import NewPlayer from './components/player/NewPlayer'
 import EditPlayer from './components/player/EditPlayer'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
@@ -28,7 +28,7 @@ render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={DoodlePlannerReact}/>
-            <Route path="/players" component={Players}/>
+            <Route path="/players" component={SearchPlayers}/>
             <Route path="/players/new" component={NewPlayer}/>
             <Route path="/players/:id" component={EditPlayer}/>
         </Route>

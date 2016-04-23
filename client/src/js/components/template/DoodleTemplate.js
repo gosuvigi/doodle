@@ -2,8 +2,8 @@
  * Created by vigi on 2/6/2016.
  */
 import React, {Component, PropTypes} from 'react'
-import Multiselect from 'react-widgets/lib/Multiselect'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import Multiselect from '../../../../node_modules/react-widgets/lib/Multiselect'
+import DateTimePicker from '../../../../node_modules/react-widgets/lib/DateTimePicker'
 import ReactQuill from 'react-quill'
 
 export default class DoodleTemplate extends Component {

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import DropdownList from 'react-widgets/lib/DropdownList'
-import DoodleTemplate from './../components/DoodleTemplate'
+import DoodleTemplate from './../components/template/DoodleTemplate'
 import {restClient} from '../utils/restClient'
 
 export default class DoodlePlannerReact extends Component {
