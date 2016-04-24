@@ -32,10 +32,10 @@
 							<npmVersion>2.14.12</npmVersion>
 						</configuration>
 					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals><goal>npm</goal></goals>
-					</execution>
+					<!--<execution>-->
+						<!--<id>npm install</id>-->
+						<!--<goals><goal>npm</goal></goals>-->
+					<!--</execution>-->
 					<execution>
 						<id>npm build</id>
 						<goals><goal>npm</goal></goals>

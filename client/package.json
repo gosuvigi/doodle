@@ -58,7 +58,8 @@
     "start": "node server.js",
     "build-production": "webpack -p --config --progress --colors --profile webpack.production.config.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'",
-    "build-prod": "SET NODE_ENV=production && webpack --config ./webpack.prod.config.js --progress"
+    "build-prod": "SET NODE_ENV=production && webpack --config ./webpack.prod.config.js --progress",
+    "build-prod-linux": "NODE_ENV=production && webpack --config ./webpack.prod.config.js --progress"
   },
   "engines": {
     "node": ">=0.12.0"
