@@ -11,7 +11,7 @@ export default class DoodlePlannerReact extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selectedTemplate: {dateTime: new Date()},
+            selectedTemplate: {matchDate: new Date()},
             templates: [],
             allPlayers: []
         }
@@ -19,7 +19,12 @@ export default class DoodlePlannerReact extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        restClient({method: 'POST', path: '/api/templates'})
+        restClient({
+            method: 'POST', 
+            path: '/api/templates/online',
+            entity: this.state.selectedTemplate,
+            headers: {'Content-Type': 'application/json'}
+        })
             .done(response => {
                 console.log(JSON.stringify(response.entity))
             }, error => {

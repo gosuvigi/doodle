@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.vigi.business.DoodleEmailService;
 import org.vigi.domain.DoodleTemplate;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -28,10 +29,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 class DoodleTemplateController {
 
     private final DoodleTemplateService templateService;
+    private final DoodleEmailService doodleEmailService;
 
     @Autowired
-    DoodleTemplateController(DoodleTemplateService templateService) {
+    DoodleTemplateController(DoodleTemplateService templateService, DoodleEmailService doodleEmailService) {
         this.templateService = templateService;
+        this.doodleEmailService = doodleEmailService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -78,8 +81,9 @@ class DoodleTemplateController {
         templateService.deleteDoodleTemplate(id);
     }
 
-    @RequestMapping(method = POST)
-    String submitDoodle() {
+    @RequestMapping(value = "online", method = POST)
+    String submitDoodle(@RequestBody DoodleTemplate template) {
+        doodleEmailService.createDoodleAndSendMails(template);
         return "{\"hodor\": 123}";
     }
 }

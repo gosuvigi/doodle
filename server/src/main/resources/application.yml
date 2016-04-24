@@ -11,3 +11,6 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
+
+doodle:
+  baseUrl: http://doodle-test.com
