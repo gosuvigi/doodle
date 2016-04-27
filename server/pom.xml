@@ -19,6 +19,7 @@
     <properties>
         <start-class>org.vigi.Application</start-class>
         <lombok.version>1.16.8</lombok.version>
+        <heroku.startup.params>-Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.mail.username=$SENDGRID_USERNAME -Dspring.mail.password=$SENDGRID_PASSWORD</heroku.startup.params>
     </properties>
 
     <dependencies>
@@ -50,6 +51,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -114,7 +128,7 @@
                 <configuration>
                     <appName>football-doodle</appName>
                     <processTypes>
-                        <web>java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/football-doodle-server.jar</web>
+                        <web>java ${heroku.startup.params} -jar target/football-doodle-server.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
