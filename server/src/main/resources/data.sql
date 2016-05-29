@@ -5,7 +5,7 @@ VALUES ('Neymar Jr', 'neymar@neymar.com', '00802', TRUE, TRUE);
 INSERT INTO PLAYERS (NAME, EMAIL, PHONE, ACTIVE, SUBSCRIBER)
 VALUES ('Luis Suarez', 'suarez@suarez.com', '00803', TRUE, TRUE);
 INSERT INTO PLAYERS (NAME, EMAIL, PHONE, ACTIVE, SUBSCRIBER)
-VALUES ('Hodor', 'hodor@hodor.com', '00804', TRUE, FALSE);
+VALUES ('Hodor', 'gosuvigi@gmail.com', '00804', TRUE, FALSE);
 INSERT INTO PLAYERS (NAME, EMAIL, PHONE, ACTIVE, SUBSCRIBER)
 VALUES ('Rivaldo', 'rivaldo@rivaldo.com', '00805', FALSE, TRUE);
 

@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.vigi.domain.DoodleTemplate;
 
@@ -57,31 +58,45 @@ public class DoodleEmailService {
         params.add("locName", dt.getLocation());
         params.add("initiatorAlias", dt.getInitiator());
         params.add("initiatorEmail", "gosuvigi@gmail.com");
+        params.add("description", "Description");
         params.add("hidden", "false");
         params.add("ifNeedBe", "false");
         params.add("askAddress", "false");
         params.add("askEmail", "false");
         params.add("askPhone", "false");
+        params.add("multiDay", "false");
+        params.add("byInvitation", "false");
+        params.add("withTzSupport", "false");
         params.add("optionsMode", "dates");
-        params.add("options[]", buildDoodleTime(dt));
-        params.add("type", "DATE");
+        // date and time look like this: 20090703=815||1015
+        String[] doodleTimes = doodleTimes(dt);
+//        params.add(doodleTimes[0], "");
+//        params.add(doodleTimes[0], doodleTimes[1] + "||" + doodleTimes[2]);
+        params.add("type", "date");
+        params.add("createdOnCalendarView", "false");
+        params.add("locale", "en_US");
 
-        ResponseEntity<DoodleResponse> responseEntity = restTemplate.postForEntity(
-                String.format("%s/np/new-polls/", doodleBaseUrl), params, DoodleResponse.class);
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<DoodleResponse> responseEntity = restTemplate.postForEntity(
+                    String.format("%s/np/new-polls/", doodleBaseUrl), params, DoodleResponse.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+            log.error(e.getResponseBodyAsString(), e);
+            return null;
+        }
     }
 
-    private String buildDoodleTime(DoodleTemplate dt) {
+    private String[] doodleTimes(DoodleTemplate dt) {
         if (dt.getMatchDate() == null) {
-            return "";
+            return new String[0];
         }
+
         LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
         String doodleDate = ldt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String startHour = ldt.getHour() + "" + ldt.getMinute();
         String endHour = (ldt.getHour() + 1) + "" + ldt.getMinute();
 
-        // time format looks like options[]:201408312000-201408312100
-        return String.format("%s%s-%s%s", doodleDate, startHour, doodleDate, endHour);
+        return new String[]{doodleDate, startHour, endHour};
     }
 
     private void sendEmails(DoodleTemplate dt, DoodleResponse doodleResponse) {

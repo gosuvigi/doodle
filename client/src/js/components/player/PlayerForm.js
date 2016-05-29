@@ -15,7 +15,7 @@ class PlayerForm extends Component {
     }
 
     render() {
-        const {name, email, phone} = this.props
+        const {id, name, email, phone} = this.props.player
         return (
             <form onSubmit={this.props.handleSubmit.bind(this)} className="form-horizontal">
                 <div className="form-group">

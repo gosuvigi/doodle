@@ -81,7 +81,7 @@ TemplateForm.propTypes = {
     template: PropTypes.shape({
         name: PropTypes.string,
         location: PropTypes.string,
-        matchDate: PropTypes.object,
+        matchDate: PropTypes.number,
         initiator: PropTypes.string,
         players: PropTypes.array,
         emailText: PropTypes.string
