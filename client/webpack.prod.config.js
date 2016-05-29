@@ -55,6 +55,11 @@ module.exports = {
                 loaders: ['file-loader?name=[path][name].[ext]'],
                 exclude: [nodeModulesPath]
             },
+            {
+                test: /\.html$/,
+                exclude: /node_modules/,
+                loader: "html"
+            }
         ]
     },
     postcss: [
@@ -66,6 +71,11 @@ module.exports = {
             inject: true,
             template: __dirname + "/src/html/index.html",
             filename: "index.html"
+        }),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: __dirname + "/src/html/login.html",
+            filename: "login.html"
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'

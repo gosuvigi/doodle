@@ -37,6 +37,11 @@ module.exports = {
             template: __dirname + "/src/html/index.html",
             filename: "index.html"
         }),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: __dirname + "/src/html/login.html",
+            filename: "login.html"
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
@@ -79,7 +84,12 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "file-loader?name=[name].[ext]",
                 include: srcPath
+            },
+            {
+                test: /\.html$/,
+                exclude: /node_modules/,
+                loader: "html"
             }
-        ],
+        ]
     }
 };

@@ -41,6 +41,8 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.18.0",
     "http-proxy": "^1.13.2",
     "json-loader": "^0.5.3",
     "postcss-loader": "^0.8.2",

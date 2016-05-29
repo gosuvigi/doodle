@@ -41,6 +41,14 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + '/static/index.html')
 });
 
+app.get("/login", function (req, res) {
+    res.sendFile(__dirname + '/src/html/login.html')
+});
+
+app.post("/login", function (req, res) {
+    proxy.web(req, res, {target: targetUrl + "/api"});
+});
+
 app.listen(port, function (error) {
     if (error) {
         console.error(error)
