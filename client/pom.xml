@@ -53,7 +53,7 @@
                         <id>exec-npm-build-production</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <executable>npm</executable>
+                            <executable>npm.cmd</executable>
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build-prod</argument>

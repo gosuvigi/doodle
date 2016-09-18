@@ -20,6 +20,9 @@
         <start-class>org.vigi.Application</start-class>
         <lombok.version>1.16.8</lombok.version>
         <heroku.startup.params>-Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.mail.username=$SENDGRID_USERNAME -Dspring.mail.password=$SENDGRID_PASSWORD -Ddoodle.login.username=$LOGIN_USERNAME -Ddoodle.login.password=$LOGIN_PASSWORD</heroku.startup.params>
+        <thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.1</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-springsecurity4.version>3.0.0.RELEASE</thymeleaf-extras-springsecurity4.version>
     </properties>
 
     <dependencies>
@@ -44,17 +47,15 @@
                     <artifactId>groovy</artifactId>
                     <groupId>org.codehaus.groovy</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>thymeleaf-layout-dialect</artifactId>
+                    <groupId>nz.net.ultraq.thymeleaf</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-        </dependency>
-        <!-- run Thymeleaf in "LEGACYHTML5" mode -->
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.22</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,11 +86,11 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

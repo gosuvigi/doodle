@@ -6,6 +6,7 @@ spring:
     favicon:
       enabled: false
   thymeleaf:
+    mode: HTML
     cache: false
     prefix: classpath:html/
   jackson:

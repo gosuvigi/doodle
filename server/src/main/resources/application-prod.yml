@@ -14,7 +14,7 @@ spring:
       enabled: false
   thymeleaf:
     cache: true
-    mode: LEGACYHTML5
+    mode: HTML
     prefix: classpath:static/
   jackson:
     #date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat

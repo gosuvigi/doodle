@@ -6,6 +6,7 @@ spring:
     favicon:
       enabled: false
   thymeleaf:
+    mode: HTML
     cache: false
     # need to add /client/static as a resource in your IDE
     prefix: classpath:/
