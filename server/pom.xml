@@ -19,7 +19,7 @@
     <properties>
         <start-class>org.vigi.Application</start-class>
         <lombok.version>1.16.8</lombok.version>
-        <heroku.startup.params>-Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.mail.username=$SENDGRID_USERNAME -Dspring.mail.password=$SENDGRID_PASSWORD</heroku.startup.params>
+        <heroku.startup.params>-Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.mail.username=$SENDGRID_USERNAME -Dspring.mail.password=$SENDGRID_PASSWORD -Ddoodle.login.username=$LOGIN_USERNAME -Ddoodle.login.password=$LOGIN_PASSWORD</heroku.startup.params>
     </properties>
 
     <dependencies>

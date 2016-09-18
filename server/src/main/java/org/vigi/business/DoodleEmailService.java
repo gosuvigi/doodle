@@ -68,11 +68,9 @@ public class DoodleEmailService {
         params.add("byInvitation", "false");
         params.add("withTzSupport", "false");
         params.add("optionsMode", "dates");
-        // date and time look like this: 20090703=815||1015
-        String[] doodleTimes = doodleTimes(dt);
-//        params.add(doodleTimes[0], "");
-//        params.add(doodleTimes[0], doodleTimes[1] + "||" + doodleTimes[2]);
-        params.add("type", "date");
+        params.add("options[]", doodleTimes(dt));
+        params.add("20090703", "1417");
+        params.add("type", "DATE");
         params.add("createdOnCalendarView", "false");
         params.add("locale", "en_US");
 
@@ -86,17 +84,17 @@ public class DoodleEmailService {
         }
     }
 
-    private String[] doodleTimes(DoodleTemplate dt) {
+    private String doodleTimes(DoodleTemplate dt) {
         if (dt.getMatchDate() == null) {
-            return new String[0];
+            return "";
         }
-
-        LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
-        String doodleDate = ldt.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String startHour = ldt.getHour() + "" + ldt.getMinute();
-        String endHour = (ldt.getHour() + 1) + "" + ldt.getMinute();
-
-        return new String[]{doodleDate, startHour, endHour};
+        // date and time look like this: 201609282100-201609282200
+        LocalDateTime dateTime1 = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
+        LocalDateTime dateTime2 = dateTime1.plusHours(1);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        String formattedDateTime1 = dateTime1.format(timeFormatter);
+        String formattedDateTime2 = dateTime2.format(timeFormatter);
+        return formattedDateTime1 + "-" + formattedDateTime2;
     }
 
     private void sendEmails(DoodleTemplate dt, DoodleResponse doodleResponse) {
@@ -111,6 +109,7 @@ public class DoodleEmailService {
                     .map(p -> p.getEmail())
                     .collect(Collectors.toList())
                     .toArray(new String[0]);
+            helper.setFrom("gosuvigi@gmail.com");
             helper.setTo(emails);
             helper.setText(bodyWriter.toString(), true);
             helper.setSubject(composeSubject(dt));
