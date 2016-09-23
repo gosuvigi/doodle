@@ -23,3 +23,17 @@ spring:
   mail:
     host: smtp.sendgrid.net
     port: 587
+
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driverClassName: org.postgresql.Driver
+    maxActive: 5
+    maxIdle: 3
+    minIdle: 2
+    initialSize: 3
+    removeAbandoned: true
+
+flyway:
+  locations: db/migration/postgresql
+  baseline-on-migrate: true
+

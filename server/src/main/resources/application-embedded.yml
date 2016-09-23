@@ -29,3 +29,7 @@ spring:
           starttls:
             enable: true
           auth: true
+
+flyway:
+  locations: db/migration/h2
+  baseline-on-migrate: true
