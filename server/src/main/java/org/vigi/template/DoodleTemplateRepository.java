@@ -2,6 +2,8 @@ package org.vigi.template;
 
 import com.nurkiewicz.jdbcrepository.JdbcRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
+import com.nurkiewicz.jdbcrepository.TableDescription;
+import com.nurkiewicz.jdbcrepository.sql.SqlGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.vigi.domain.DoodleTemplate;
 
+import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +25,14 @@ import java.util.stream.Collectors;
 @Repository
 class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
 
-    private static final String BASIC_QUERY = " FROM DOODLE_TEMPLATES where lower(NAME) like ? or lower(INITIATOR) like ?";
-    private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(NAME) ASC LIMIT ? OFFSET ?";
+    private static final String BASIC_QUERY = " FROM doodle_templates where lower(name) like ? or lower(initiator) like ?";
+    private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(name) ASC LIMIT ? OFFSET ?";
 
     private final JdbcOperations jdbcOperations;
 
     @Autowired
-    DoodleTemplateRepository(JdbcOperations jdbcOperations) {
-        super(ROW_MAPPER, ROW_UNMAPPER, "DOODLE_TEMPLATES");
+    DoodleTemplateRepository(JdbcOperations jdbcOperations, SqlGenerator sqlGenerator) {
+        super(ROW_MAPPER, ROW_UNMAPPER, sqlGenerator, new TableDescription("doodle_templates", "id"));
         this.jdbcOperations = jdbcOperations;
     }
 
@@ -41,23 +44,25 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
 
     private static final RowMapper<DoodleTemplate> ROW_MAPPER = (rs, rowNum) -> {
         DoodleTemplate template = new DoodleTemplate();
-        template.setId(rs.getLong("ID"));
-        template.setName(rs.getString("NAME"));
-        template.setLocation(rs.getString("LOCATION"));
-        template.setInitiator(rs.getString("INITIATOR"));
-        template.setEmailText(rs.getString("EMAIL_TEXT"));
-        template.setMatchDate(rs.getTimestamp("MATCH_DATE"));
+        template.setId(rs.getLong("id"));
+        template.setName(rs.getString("name"));
+        template.setLocation(rs.getString("location"));
+        template.setInitiator(rs.getString("initiator"));
+        template.setEmailText(rs.getString("email_text"));
+        template.setMatchDate(rs.getTimestamp("match_date"));
         return template;
     };
 
-    private static final RowUnmapper<DoodleTemplate> ROW_UNMAPPER = player -> {
+    private static final RowUnmapper<DoodleTemplate> ROW_UNMAPPER = template -> {
         Map<String, Object> row = new LinkedHashMap<>();
-        row.put("ID", player.getId());
-        row.put("NAME", player.getName());
-        row.put("LOCATION", player.getLocation());
-        row.put("INITIATOR", player.getInitiator());
-        row.put("MATCH_DATE", player.getMatchDate());
-        row.put("EMAIL_TEXT", player.getEmailText());
+        row.put("id", template.getId());
+        row.put("name", template.getName());
+        row.put("location", template.getLocation());
+        row.put("initiator", template.getInitiator());
+        if (template.getMatchDate() != null) {
+            row.put("match_date", new Timestamp(template.getMatchDate().getTime()));
+        }
+        row.put("email_text", template.getEmailText());
         return row;
     };
 
@@ -76,7 +81,7 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
     }
 
     private void deletePreviousPlayers(Long templateId) {
-        jdbcOperations.update("DELETE FROM TEMPLATES_PLAYERS_INT where TEMPLATE_ID = ?",
+        jdbcOperations.update("DELETE FROM templates_players_int where template_id = ?",
                 new Object[]{templateId});
     }
 
@@ -84,7 +89,7 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         List<Object[]> batch = playerIds.stream().map(
                 playerId -> new Object[]{templateId, playerId}).collect(Collectors.toList());
         jdbcOperations.batchUpdate(
-                "INSERT INTO TEMPLATES_PLAYERS_INT (TEMPLATE_ID, PLAYER_ID) VALUES (?, ?)", batch);
+                "INSERT INTO templates_players_int (template_id, player_id) VALUES (?, ?)", batch);
     }
 
     @Override

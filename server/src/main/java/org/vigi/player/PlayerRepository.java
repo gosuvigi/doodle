@@ -2,6 +2,8 @@ package org.vigi.player;
 
 import com.nurkiewicz.jdbcrepository.JdbcRepository;
 import com.nurkiewicz.jdbcrepository.RowUnmapper;
+import com.nurkiewicz.jdbcrepository.TableDescription;
+import com.nurkiewicz.jdbcrepository.sql.SqlGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,16 +21,16 @@ import java.util.*;
 @Repository
 public class PlayerRepository extends JdbcRepository<Player, Long> {
 
-    private static final String BASIC_QUERY = " FROM PLAYERS where lower(NAME) like ? or lower(EMAIL) like ?";
-    private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(NAME) ASC LIMIT ? OFFSET ?";
-    private static final String PLAYERS_TEMPLATE_QUERY = "SELECT * FROM PLAYERS p INNER JOIN TEMPLATES_PLAYERS_INT tp " +
-            "on p.Id = tp.PLAYER_ID where tp.TEMPLATE_ID = ?";
+    private static final String BASIC_QUERY = " FROM players where lower(name) like ? or lower(email) like ?";
+    private static final String FULL_QUERY = BASIC_QUERY + " ORDER BY lower(name) ASC LIMIT ? OFFSET ?";
+    private static final String PLAYERS_TEMPLATE_QUERY = "SELECT * FROM players p INNER JOIN templates_players_int tp " +
+            "on p.Id = tp.player_id where tp.template_id = ?";
 
     private final JdbcOperations jdbcOperations;
 
     @Autowired
-    PlayerRepository(JdbcOperations jdbcOperations) {
-        super(ROW_MAPPER, ROW_UNMAPPER, "PLAYERS");
+    PlayerRepository(JdbcOperations jdbcOperations, SqlGenerator sqlGenerator) {
+        super(ROW_MAPPER, ROW_UNMAPPER, sqlGenerator, new TableDescription("players", "id"));
         this.jdbcOperations = jdbcOperations;
     }
 

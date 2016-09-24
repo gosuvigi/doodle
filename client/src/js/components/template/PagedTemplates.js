@@ -58,26 +58,31 @@ export default class PagedTemplates extends Component {
             navLinks.push(<li className="disabled" key="last"><span><span aria-hidden="true">&gt;&gt;</span></span></li>)
         }
 
+        const addButtonNoTemplates = templates.length > 0 ? <div/> : <Link to="/templates/new" data-toggle="tooltip" title="Add a new template" className="btn btn-primary">Add template</Link>
+
         return (
-            <div className="table-responsive">
-                <table className="table table-striped table-hover table-condensed">
-                    <thead>
-                    <tr>
-                        <th>Actions</th>
-                        <th>Name</th>
-                        <th>Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {templatesList}
-                    </tbody>
-                </table>
-                <nav>
-                    <ul className="pager">
-                        {navLinks}
-                        <span>{pageMetadata.totalElements} results found. Page {pageMetadata.number + 1} of {pageMetadata.totalPages}.</span>
-                    </ul>
-                </nav>
+            <div>
+                {addButtonNoTemplates}
+                <div className="table-responsive">
+                    <table className="table table-striped table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {templatesList}
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul className="pager">
+                            {navLinks}
+                            <span>{pageMetadata.totalElements} results found. Page {pageMetadata.number + 1} of {pageMetadata.totalPages}.</span>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         )
     }

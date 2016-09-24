@@ -33,7 +33,7 @@ export default class PagedPlayers extends Component {
 
     render() {
         const {players, pageMetadata} = this.props
-        var playersList = players.map(player =>
+        const playersList = players.map(player =>
             <tr key={player.id}>
                 <td>
                     <DeletePlayer playerId={player.id} key={player.id}/>
@@ -62,28 +62,32 @@ export default class PagedPlayers extends Component {
             navLinks.push(<li className="disabled" key="next"><span><span aria-hidden="true">&gt;</span></span></li>)
             navLinks.push(<li className="disabled" key="last"><span><span aria-hidden="true">&gt;&gt;</span></span></li>)
         }
+        const addButtonNoPlayers = players.length > 0 ? <div/> : <Link to="/players/new" data-toggle="tooltip" title="Add a new player" className="btn btn-primary">Add player</Link>
 
         return (
-            <div className="table-responsive">
-                <table className="table table-striped table-hover table-condensed">
-                    <thead>
-                    <tr>
-                        <th>Actions</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {playersList}
-                    </tbody>
-                </table>
-                <nav>
-                    <ul className="pager">
-                        {navLinks}
-                        <span>{pageMetadata.totalElements} results found. Page {pageMetadata.number + 1} of {pageMetadata.totalPages}.</span>
-                    </ul>
-                </nav>
+            <div>
+                {addButtonNoPlayers}
+                <div className="table-responsive">
+                    <table className="table table-striped table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {playersList}
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul className="pager">
+                            {navLinks}
+                            <span>{pageMetadata.totalElements} results found. Page {pageMetadata.number + 1} of {pageMetadata.totalPages}.</span>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         )
     }

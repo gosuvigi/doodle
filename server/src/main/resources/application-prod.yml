@@ -34,6 +34,5 @@ spring:
     removeAbandoned: true
 
 flyway:
-  locations: db/migration/postgresql
-  baseline-on-migrate: true
+  enabled: false
 

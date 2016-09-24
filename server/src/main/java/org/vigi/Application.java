@@ -1,5 +1,7 @@
 package org.vigi;
 
+import com.nurkiewicz.jdbcrepository.sql.PostgreSqlGenerator;
+import com.nurkiewicz.jdbcrepository.sql.SqlGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -39,5 +41,17 @@ public class Application extends SpringBootServletInitializer {
 	@Profile("prod")
 	DataSource dataSource() {
 		return DataSourceBuilder.create().build();
+	}
+
+	@Bean
+	@Profile("prod")
+	SqlGenerator postgreSqlGenerator() {
+		return new PostgreSqlGenerator();
+	}
+
+	@Bean
+	@Profile("!prod")
+	SqlGenerator sqlGenerator() {
+		return new SqlGenerator();
 	}
 }
