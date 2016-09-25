@@ -35,4 +35,5 @@ spring:
 
 flyway:
   enabled: false
+  placeholder-replacement: false
 

@@ -109,13 +109,13 @@ public class DoodleEmailService {
                     .map(p -> p.getEmail())
                     .collect(Collectors.toList())
                     .toArray(new String[0]);
-            helper.setFrom("gosuvigi@gmail.com");
+            helper.setFrom(dt.getInitiator());
             helper.setTo(emails);
             helper.setText(bodyWriter.toString(), true);
             helper.setSubject(composeSubject(dt));
             log.info("--- Sending email message");
             log.info("--- Recipients: {}", new Object[]{message.getRecipients(Message.RecipientType.TO)});
-            log.info("--- Body: {}", bodyWriter);
+            log.info("--- Email body: {}", bodyWriter);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -124,17 +124,18 @@ public class DoodleEmailService {
     }
 
     private String composeSubject(DoodleTemplate dt) {
+        return String.format("%s on %s at %s", dt.getName(), formatDoodleMatchDate(dt), dt.getLocation());
+    }
+
+    private String formatDoodleMatchDate(DoodleTemplate dt) {
         LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
-        String doodleDate = ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-        return String.format("%s on %s at %s", dt.getName(), doodleDate, dt.getLocation());
+        return ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
     private VelocityContext buildEmailTemplateContext(DoodleTemplate dt, DoodleResponse doodleResponse) {
         VelocityContext context = new VelocityContext();
-        context.put("matchDate", dt.getMatchDate());
-        context.put("matchTime", dt.getMatchDate());
-        context.put("gameLink", buildDoodleLink(doodleResponse));
-        context.put("initiatorName", dt.getInitiator());
+        context.put("doodleDate", formatDoodleMatchDate(dt));
+        context.put("doodleLink", buildDoodleLink(doodleResponse));
         return context;
     }
 

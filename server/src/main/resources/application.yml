@@ -15,3 +15,7 @@ spring:
 
 doodle:
   baseUrl: http://doodle-test.com
+
+flyway:
+  placeholder-replacement: false
+
