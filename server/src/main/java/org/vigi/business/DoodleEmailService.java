@@ -1,8 +1,9 @@
 package org.vigi.business;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,20 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.vigi.domain.DoodleTemplate;
+import org.vigi.domain.Player;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,14 +40,16 @@ public class DoodleEmailService {
 
     private final RestTemplate restTemplate;
     private final JavaMailSender mailSender;
+    private final Configuration freemarkerConfiguration;
 
     @Value("${doodle.baseUrl}")
     private String doodleBaseUrl;
 
     @Autowired
-    DoodleEmailService(RestTemplate restTemplate, JavaMailSender mailSender) {
+    DoodleEmailService(RestTemplate restTemplate, JavaMailSender mailSender, Configuration freemarkerConfiguration) {
         this.restTemplate = restTemplate;
         this.mailSender = mailSender;
+        this.freemarkerConfiguration = freemarkerConfiguration;
     }
 
     public void createDoodleAndSendMails(DoodleTemplate dt) {
@@ -98,25 +106,22 @@ public class DoodleEmailService {
     }
 
     private void sendEmails(DoodleTemplate dt, DoodleResponse doodleResponse) {
-        VelocityContext context = buildEmailTemplateContext(dt, doodleResponse);
-        StringWriter bodyWriter = new StringWriter();
-        Velocity.evaluate(context, bodyWriter, "errorTemplate", dt.getEmailText());
-
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
             String[] emails = dt.getPlayers().stream()
-                    .map(p -> p.getEmail())
+                    .map(Player::getEmail)
                     .collect(Collectors.toList())
                     .toArray(new String[0]);
             helper.setFrom(dt.getInitiator());
             helper.setTo(emails);
-            helper.setText(bodyWriter.toString(), true);
+            String emailText = buildEmailText(dt, doodleResponse);
+            helper.setText(emailText, true);
             helper.setSubject(composeSubject(dt));
             log.info("--- Sending email message");
             log.info("--- Recipients: {}", new Object[]{message.getRecipients(Message.RecipientType.TO)});
-            log.info("--- Email body: {}", bodyWriter);
-        } catch (MessagingException e) {
+            log.info("--- Email text: {}", emailText);
+        } catch (MessagingException | TemplateException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -132,11 +137,14 @@ public class DoodleEmailService {
         return ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
-    private VelocityContext buildEmailTemplateContext(DoodleTemplate dt, DoodleResponse doodleResponse) {
-        VelocityContext context = new VelocityContext();
-        context.put("doodleDate", formatDoodleMatchDate(dt));
-        context.put("doodleLink", buildDoodleLink(doodleResponse));
-        return context;
+    private String buildEmailText(DoodleTemplate dt, DoodleResponse doodleResponse) throws IOException, TemplateException {
+        Map<String, Object> emailParameters = new HashMap<>();
+        emailParameters.put("doodleDate", formatDoodleMatchDate(dt));
+        emailParameters.put("doodleLink", buildDoodleLink(doodleResponse));
+        Template emailTemplate = new Template(dt.toString(), new StringReader(dt.getEmailText()), freemarkerConfiguration);
+        StringWriter writer = new StringWriter();
+        emailTemplate.process(emailParameters, writer);
+        return writer.toString();
     }
 
     private String buildDoodleLink(DoodleResponse doodleResponse) {

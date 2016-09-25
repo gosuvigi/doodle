@@ -5,7 +5,6 @@ import com.nurkiewicz.jdbcrepository.sql.SqlGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.autoconfigure.velocity.VelocityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
@@ -17,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication(exclude = VelocityAutoConfiguration.class)
+@SpringBootApplication
 @EnableEntityLinks
 public class Application extends SpringBootServletInitializer {
 
