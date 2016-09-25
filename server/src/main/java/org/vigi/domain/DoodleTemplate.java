@@ -21,6 +21,8 @@ public class DoodleTemplate implements Persistable<Long> {
 
     private Date matchDate;
 
+    private Integer matchDayOfWeek;
+
     private String initiator;
 
     private String emailText;

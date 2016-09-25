@@ -33,7 +33,7 @@ class PlayerController {
         this.playerService = playerService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     PagedResources<Resource<Player>> pagedPlayerResources(
             @RequestParam(value = "q", required = false) String searchTerm, Pageable pageable) {
         Page<Player> playersPaged = playerService.findBySearchTerm(searchTerm, pageable);
@@ -45,7 +45,7 @@ class PlayerController {
         return pagedResources;
     }
 
-    @RequestMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     Resource<Player> playerResource(@PathVariable Long id) {
         return playerToResource(playerService.getPlayer(id));
     }
@@ -59,7 +59,7 @@ class PlayerController {
         return BasicLinkBuilder.linkToCurrentMapping().slash("players").slash(player.getId()).withRel("view");
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<Void> createPlayer(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
         Player added = playerService.addPlayer(player);
 
@@ -68,12 +68,12 @@ class PlayerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     Resource<Player> updatePlayer(@PathVariable Long id, @RequestBody Player player) {
         return playerToResource(playerService.updatePlayer(player));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     void deletePlayer(@PathVariable Long id) {
         playerService.deletePlayer(id);
     }

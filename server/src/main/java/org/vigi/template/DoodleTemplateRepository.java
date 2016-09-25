@@ -50,6 +50,7 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         template.setInitiator(rs.getString("initiator"));
         template.setEmailText(rs.getString("email_text"));
         template.setMatchDate(rs.getTimestamp("match_date"));
+        template.setMatchDayOfWeek(rs.getInt("match_day_of_week"));
         return template;
     };
 
@@ -62,6 +63,7 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         if (template.getMatchDate() != null) {
             row.put("match_date", new Timestamp(template.getMatchDate().getTime()));
         }
+        row.put("match_day_of_week", template.getMatchDayOfWeek());
         row.put("email_text", template.getEmailText());
         return row;
     };
@@ -70,9 +72,9 @@ class DoodleTemplateRepository extends JdbcRepository<DoodleTemplate, Long> {
         String q = "%" + searchTerm.trim() + "%";
         int offset = pageable.getPageNumber() * pageable.getPageSize();
         Object[] params = new Object[]{q, q, pageable.getPageSize(), offset};
-        List<DoodleTemplate> players = jdbcOperations.query("SELECT * " + FULL_QUERY, params, ROW_MAPPER);
+        List<DoodleTemplate> templates = jdbcOperations.query("SELECT * " + FULL_QUERY, params, ROW_MAPPER);
         int count = jdbcOperations.queryForObject("SELECT COUNT(1) " + BASIC_QUERY, new Object[]{q, q}, Integer.class);
-        return new PageImpl<>(players, pageable, count);
+        return new PageImpl<>(templates, pageable, count);
     }
 
     void addPlayersToTemplate(Long templateId, List<Long> playerIds) {

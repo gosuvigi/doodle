@@ -12,6 +12,7 @@ CREATE TABLE doodle_templates (
   name VARCHAR(255) NOT NULL,
   location VARCHAR(255) NOT NULL,
   match_date TIMESTAMP,
+  match_day_of_week INT,
   initiator VARCHAR(255) NOT NULL,
   email_text VARCHAR(1023) NOT NULL
 );

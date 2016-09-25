@@ -4,6 +4,7 @@
 import React, {Component, PropTypes} from 'react'
 import Multiselect from 'react-widgets/lib/Multiselect'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import Combobox from 'react-widgets/lib/Combobox'
 import ReactQuill from 'react-quill'
 
 class TemplateForm extends Component {
@@ -18,8 +19,18 @@ class TemplateForm extends Component {
     }
 
     render() {
-        const {name, location, matchDate, initiator, players, emailText} = this.props.template
+        const {name, location, matchDate, matchDayOfWeek, initiator, players, emailText} = this.props.template
         const allPlayers = this.props.allPlayers
+        const days = [
+            {id: 0, name: 'Sunday'},
+            {id: 1, name: 'Monday'},
+            {id: 2, name: 'Tuesday'},
+            {id: 3, name: 'Wednesday'},
+            {id: 4, name: 'Thursday'},
+            {id: 5, name: 'Friday'},
+            {id: 6, name: 'Saturday'}]
+        const initialDate = new Date()
+        initialDate.setHours(21, 0)
         return (
             <form onSubmit={this.props.handleSubmit.bind(this)} className="form-horizontal">
                 <div className="form-group">
@@ -39,9 +50,16 @@ class TemplateForm extends Component {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="dateTime" className="col-sm-2 control-label">Match Date</label>
+                    <label htmlFor="dateTime" className="col-sm-2 control-label">Match Day</label>
                     <div className="col-sm-4">
-                        <DateTimePicker type="text" value={new Date(matchDate)}
+                        <Combobox data={days} value={matchDayOfWeek} valueField="id" textField="name" defaultValue={1}
+                                  onChange={val => this.props.handleChange('matchDayOfWeek', val.id)}/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="dateTime" className="col-sm-2 control-label">Match Time</label>
+                    <div className="col-sm-4">
+                        <DateTimePicker type="text" value={new Date(matchDate)} calendar={false} time={true} defaultValue={initialDate}
                                         onChange={val => this.props.handleChange('matchDate', val)}/>
                     </div>
                 </div>
@@ -81,7 +99,7 @@ TemplateForm.propTypes = {
     template: PropTypes.shape({
         name: PropTypes.string,
         location: PropTypes.string,
-        matchDate: PropTypes.number,
+        matchDayOfWeek: PropTypes.number,
         initiator: PropTypes.string,
         players: PropTypes.array,
         emailText: PropTypes.string

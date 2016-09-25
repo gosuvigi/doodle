@@ -35,6 +35,10 @@ class DoodleTemplateService {
         return template;
     }
 
+    List<Player> getTemplatePlayers(Long templateId) {
+        return playerRepository.findPlayersForTemplate(templateId);
+    }
+
     @Transactional(readOnly = true)
     Page<DoodleTemplate> findBySearchTerm(String searchTerm, Pageable pageable) {
         if (StringUtils.hasText(searchTerm)) {

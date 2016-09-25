@@ -16,6 +16,7 @@ class EditTemplate extends Component {
                 location: "",
                 initiator: "",
                 matchDate: new Date().getTime(),
+                matchDayOfWeek: 1,
                 players: [],
                 emailText: ""
             },

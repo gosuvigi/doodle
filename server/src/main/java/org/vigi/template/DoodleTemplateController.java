@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.vigi.business.DoodleEmailService;
 import org.vigi.domain.DoodleTemplate;
+import org.vigi.domain.Player;
+
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by vigi on 3/20/2016.
@@ -51,9 +53,14 @@ class DoodleTemplateController {
         return pagedResources;
     }
 
-    @RequestMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     Resource<DoodleTemplate> templateResource(@PathVariable Long id) {
         return templateToResource(templateService.getDoodleTemplate(id));
+    }
+
+    @GetMapping(value = "/{id}/players", produces = APPLICATION_JSON_VALUE)
+    List<Player> getTemplatePlayers(@PathVariable Long id) {
+        return templateService.getTemplatePlayers(id);
     }
 
     private Resource<DoodleTemplate> templateToResource(DoodleTemplate template) {
@@ -62,7 +69,7 @@ class DoodleTemplateController {
         return new Resource<>(template, selfLink, viewLink);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<Void> createTemplate(@RequestBody DoodleTemplate template, UriComponentsBuilder ucBuilder) {
         DoodleTemplate added = templateService.addDoodleTemplate(template);
 
@@ -71,19 +78,18 @@ class DoodleTemplateController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     Resource<DoodleTemplate> updateTemplate(@PathVariable Long id, @RequestBody DoodleTemplate template) {
         return templateToResource(templateService.updateDoodleTemplate(template));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     void deleteTemplate(@PathVariable Long id) {
         templateService.deleteDoodleTemplate(id);
     }
 
-    @RequestMapping(value = "online", method = POST)
-    String submitDoodle(@RequestBody DoodleTemplate template) {
+    @PostMapping(value = "doodle")
+    void submitDoodle(@RequestBody DoodleTemplate template) {
         doodleEmailService.createDoodleAndSendMails(template);
-        return "{\"hodor\": 123}";
     }
 }

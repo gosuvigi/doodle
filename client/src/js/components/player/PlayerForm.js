@@ -15,13 +15,13 @@ class PlayerForm extends Component {
     }
 
     render() {
-        const {id, name, email, phone} = this.props.player
+        const {id, name, email, phone, active, subscriber} = this.props.player
         return (
             <form onSubmit={this.props.handleSubmit.bind(this)} className="form-horizontal">
                 <div className="form-group">
                     <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                     <div className="col-sm-6">
-                        <input type="text" value={name} className="form-control"
+                        <input type="text" value={name} className="form-control" id="name"
                                onChange={this.handleChange.bind(this, "name")}
                                placeholder="Name" required={true} autoFocus={true}/>
                     </div>
@@ -29,7 +29,7 @@ class PlayerForm extends Component {
                 <div className="form-group">
                     <label htmlFor="email" className="col-sm-2 control-label">Email</label>
                     <div className="col-sm-6">
-                        <input type="text" value={email} className="form-control"
+                        <input type="text" value={email} className="form-control" id="email"
                                onChange={this.handleChange.bind(this, "email")}
                                placeholder="Email" required={true}/>
                     </div>
@@ -37,7 +37,7 @@ class PlayerForm extends Component {
                 <div className="form-group">
                     <label htmlFor="phone" className="col-sm-2 control-label">Phone</label>
                     <div className="col-sm-6">
-                        <input type="text" value={phone} className="form-control"
+                        <input type="text" value={phone} className="form-control" id="phone"
                                onChange={this.handleChange.bind(this, "phone")}
                                placeholder="Phone"/>
                     </div>
