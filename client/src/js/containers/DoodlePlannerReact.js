@@ -71,12 +71,26 @@ export default class DoodlePlannerReact extends Component {
         this.setState({selectedTemplate: updatedTemplate})
     }
 
+    getNextDayOfWeek(date, dayOfWeek) {
+        var resultDate = new Date(date.getTime())
+        resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7)
+        return resultDate
+    }
+
     handleChangeTemplate(template) {
+        const nextDay = this.getNextDayOfWeek
         restClient({method: 'GET', path: '/api/templates/' + template.id + '/players'})
             .done(
                 response => {
+                    const adjustedNextMatchDate = nextDay(new Date(), template.matchDayOfWeek)
+                    const helperDateTime = new Date(template.matchDate)
+                    if (template.matchDate) {
+                        adjustedNextMatchDate.setHours(helperDateTime.getHours(), helperDateTime.getMinutes())
+                    }
+
                     const templatePlayers = response.entity
-                    const updatedTemplate = Object.assign({}, template, {players: templatePlayers})
+                    const updatedTemplate = Object.assign({}, template, {players: templatePlayers, matchDate: adjustedNextMatchDate})
+
                     this.setState({selectedTemplate: updatedTemplate, doodleCreationSuccess: null})
                 }, error => {
                     this.setState({selectedTemplate: template, error: error})

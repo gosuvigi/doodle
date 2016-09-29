@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class DoodleEmailService {
 
     public void createDoodleAndSendMails(DoodleTemplate dt) {
         log.info("--- Received doodle template: '{}'.", dt);
+        System.out.println(formatDoodleMatchDate(dt));
         DoodleResponse doodleResponse = createOnlineDoodle(dt);
         log.info("--- Got response: '{}'.", doodleResponse);
 
@@ -62,11 +64,11 @@ public class DoodleEmailService {
 
     private DoodleResponse createOnlineDoodle(DoodleTemplate dt) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("title", dt.getName());
+        params.add("title", composeSubject(dt));
         params.add("locName", dt.getLocation());
         params.add("initiatorAlias", dt.getInitiator());
-        params.add("initiatorEmail", "gosuvigi@gmail.com");
-        params.add("description", "Description");
+        params.add("initiatorEmail", dt.getInitiator());
+        params.add("description", "Football at VUB");
         params.add("hidden", "false");
         params.add("ifNeedBe", "false");
         params.add("askAddress", "false");
@@ -134,12 +136,14 @@ public class DoodleEmailService {
 
     private String formatDoodleMatchDate(DoodleTemplate dt) {
         LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
-        return ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        ZoneId id = ZoneId.of("Europe/Brussels");
+        ZonedDateTime zoned = ZonedDateTime.of(ldt, id);
+        return zoned.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
     private String buildEmailText(DoodleTemplate dt, DoodleResponse doodleResponse) throws IOException, TemplateException {
         Map<String, Object> emailParameters = new HashMap<>();
-        emailParameters.put("doodleDate", formatDoodleMatchDate(dt));
+        emailParameters.put("matchDate", formatDoodleMatchDate(dt));
         emailParameters.put("doodleLink", buildDoodleLink(doodleResponse));
         Template emailTemplate = new Template(dt.toString(), new StringReader(dt.getEmailText()), freemarkerConfiguration);
         StringWriter writer = new StringWriter();

@@ -24,22 +24,10 @@ export default class DoodleTemplate extends Component {
         this.props.handleAddCustomPlayer(player)
     }
 
-    getNextDayOfWeek(date, dayOfWeek) {
-        var resultDate = new Date(date.getTime())
-        resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7)
-        return resultDate
-    }
-
     render() {
         const {location, matchDate, matchDayOfWeek, initiator, players, emailText} = this.props.template
         const allPlayers = this.props.allPlayers
-        const adjustedNextMatchDate = this.getNextDayOfWeek(new Date(), matchDayOfWeek)
-        const helperDateTime = new Date(matchDate)
-        if (matchDate) {
-            adjustedNextMatchDate.setHours(helperDateTime.getHours(), helperDateTime.getMinutes())
-        }
         const messageLabels = {createNew: "Add new email address"}
-
 
         return (
             <div>
@@ -54,7 +42,7 @@ export default class DoodleTemplate extends Component {
                 <div className="form-group">
                     <label htmlFor="dateTime" className="col-sm-2 control-label">Date / Time</label>
                     <div className="col-sm-4">
-                        <DateTimePicker type="text" value={new Date(adjustedNextMatchDate)}
+                        <DateTimePicker type="text" value={new Date(matchDate)}
                                         format={"dddd, MMMM DD, HH:mm"}
                                         onChange={val => this.props.handleChange('matchDate', val)}/>
                     </div>
