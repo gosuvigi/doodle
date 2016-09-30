@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,6 +37,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class DoodleEmailService {
+
+    private static final ZoneId UTC_ZONE = ZoneId.of("UTC");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy, HH:mm");
 
     private final RestTemplate restTemplate;
     private final JavaMailSender mailSender;
@@ -55,7 +57,6 @@ public class DoodleEmailService {
 
     public void createDoodleAndSendMails(DoodleTemplate dt) {
         log.info("--- Received doodle template: '{}'.", dt);
-        System.out.println(formatDoodleMatchDate(dt));
         DoodleResponse doodleResponse = createOnlineDoodle(dt);
         log.info("--- Got response: '{}'.", doodleResponse);
 
@@ -99,7 +100,7 @@ public class DoodleEmailService {
             return "";
         }
         // date and time look like this: 201609282100-201609282200
-        LocalDateTime dateTime1 = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
+        LocalDateTime dateTime1 = convertFromUtcToHomeDateTime(dt);
         LocalDateTime dateTime2 = dateTime1.plusHours(1);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         String formattedDateTime1 = dateTime1.format(timeFormatter);
@@ -135,10 +136,15 @@ public class DoodleEmailService {
     }
 
     private String formatDoodleMatchDate(DoodleTemplate dt) {
-        LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), ZoneId.systemDefault());
-        ZoneId id = ZoneId.of("Europe/Brussels");
-        ZonedDateTime zoned = ZonedDateTime.of(ldt, id);
-        return zoned.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        LocalDateTime homeDateTime = convertFromUtcToHomeDateTime(dt);
+        return homeDateTime.format(DATE_TIME_FORMATTER);
+    }
+
+    private LocalDateTime convertFromUtcToHomeDateTime(DoodleTemplate dt) {
+        LocalDateTime ldt = LocalDateTime.ofInstant(dt.getMatchDate().toInstant(), UTC_ZONE);
+        ZoneId homeZone = ZoneId.of("Europe/Brussels");
+        ZonedDateTime zoned = ZonedDateTime.of(ldt, UTC_ZONE);
+        return zoned.withZoneSameInstant(homeZone).toLocalDateTime();
     }
 
     private String buildEmailText(DoodleTemplate dt, DoodleResponse doodleResponse) throws IOException, TemplateException {
